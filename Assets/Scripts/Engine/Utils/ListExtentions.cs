@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SS
 {
@@ -19,6 +20,13 @@ namespace SS
 
             list.Add(item);
             return true;
+        }
+        public static object PickRandom(this IList<object> list)
+        {
+            if (list.Count == 0)
+                return null;
+            
+            return list[Random.Range(0, list.Count)];
         }
         public static void AddMultipleNew<T>(this List<T> list, int amount) where T : new()
         {

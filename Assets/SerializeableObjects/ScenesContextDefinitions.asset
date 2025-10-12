@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19956c6805fcb4a43973c7ade4f9c307, type: 3}
-  m_Name: Play_Context
+  m_Name: MainPlay_Context
   m_EditorClassIdentifier: 
   Container: {fileID: 11400000}
   assetGUID: -17768
@@ -62,5 +62,8 @@ MonoBehaviour:
   - Scene:
       asset: {fileID: 102900000, guid: 63de4281423684b91b1d2d28d953fb0b, type: 3}
       guid: 63de4281423684b91b1d2d28d953fb0b
+  - Scene:
+      asset: {fileID: 102900000, guid: c59b4c2227f54410ca073827d6deae41, type: 3}
+      guid: c59b4c2227f54410ca073827d6deae41
   bootSteps: {fileID: 7647497715872273728, guid: 1555e79c6c72544e09b55ec1ff99162d, type: 3}
   isPlayingScene: 1

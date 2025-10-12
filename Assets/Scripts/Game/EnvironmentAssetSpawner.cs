@@ -1,0 +1,91 @@
+using System.Collections.Generic;
+using NaughtyAttributes;
+using SS;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+public class EnvironmentAssetSpawner : MonoBehaviour
+{
+    [SerializeField] private bool doSpawn = true;
+
+    [FormerlySerializedAs("assetRefs")] [SerializeField] private Transform[] assetDummys;
+    
+    [SerializeField] private bool limitXDistance = false;
+    [SerializeField] private bool limitCount = false;
+
+    [SerializeField, ShowIf("limitXDistance")] private float minXDistance;
+    [SerializeField, ShowIf("limitCount")] private float maxCount;
+    
+    private List<Transform> assets = new();
+
+    private void OnValidate()
+    {
+        var list = new List<Transform>(GetComponentsInChildren<Transform>());
+        list.Remove(transform);
+        assetDummys = list.ToArray();
+    }
+
+    private void Awake()
+    {
+        foreach (var dummy in assetDummys)
+        {
+            dummy.gameObject.SetActive(false);
+        }
+    }
+
+    public void Refresh(float translation)
+    {
+        List<GameObject> toDestroy = new List<GameObject>();
+        
+        float smallestXPositionElement = TranslateAllAssets(translation, ref toDestroy);
+        
+        DeleteAccess(toDestroy);
+
+        if (!doSpawn)
+            return;
+        
+        TrySpawnNewAsset(smallestXPositionElement);
+    }
+
+    private float TranslateAllAssets(float translation, ref List<GameObject> toDestroy)
+    {
+        float smallestXPositionElement = -EnvironmentHandler.ASSET_AREA_RADIUS;
+        
+        foreach (var asset in assets)
+        {
+            asset.position -= new Vector3(translation, 0f, 0f);
+            smallestXPositionElement = Mathf.Max(smallestXPositionElement, asset.position.x);
+            
+            if (asset.position.x < -EnvironmentHandler.ASSET_AREA_RADIUS)
+            {
+                toDestroy.Add(asset.gameObject);
+            }
+        }
+
+        return smallestXPositionElement;
+    }
+
+    private void DeleteAccess(List<GameObject> toDestroy)
+    {
+        for (var index = toDestroy.Count - 1; index >= 0; index--)
+        {
+            Destroy(toDestroy[index]);
+            assets.Remove(toDestroy[index].transform);
+        }
+    }
+
+    private void TrySpawnNewAsset(float smallestXPositionElement)
+    {
+        if (limitXDistance && smallestXPositionElement > EnvironmentHandler.ASSET_AREA_RADIUS - minXDistance)
+            return;
+        
+        if (limitCount && assets.Count >= maxCount)
+            return;
+
+        var dummy = (Transform)(assetDummys.PickRandom());
+        var spawnPos = new Vector3(EnvironmentHandler.ASSET_AREA_RADIUS, dummy.transform.position.y, 0f);
+        var newAsset = Instantiate(dummy, spawnPos, Quaternion.identity);
+        newAsset.gameObject.SetActive(true);
+        assets.Add(newAsset);
+    }
+}
