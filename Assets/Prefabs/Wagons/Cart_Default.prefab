@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1419410853893434747}
-  - component: {fileID: -7858105255310936917}
+  - component: {fileID: 2089143345808602313}
   m_Layer: 0
   m_Name: Cart_Default
   m_TagString: Untagged
@@ -120,7 +120,7 @@ Transform:
   - {fileID: 7775469847880327570}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7858105255310936917
+--- !u!114 &2089143345808602313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6773282359903964928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44902525c6d44af9a4df6dd8d2ec636b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d1948e31d81f4d6c90ed0985843827f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wagonConfig: {fileID: -8922496817871734148, guid: 514d7e6ed6bb94ae39849c3fd4089397, type: 2}

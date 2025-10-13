@@ -20,8 +20,9 @@ public class EnvironmentAssetSpawner : MonoBehaviour
 
     private void OnValidate()
     {
-        var list = new List<Transform>(GetComponentsInChildren<Transform>());
-        list.Remove(transform);
+        var list = new List<Transform>();
+        for (int i = 0; i < transform.childCount; i++)
+            list.Add(transform.GetChild(i));
         assetDummys = list.ToArray();
     }
 
