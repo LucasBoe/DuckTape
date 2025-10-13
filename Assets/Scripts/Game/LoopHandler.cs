@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using SS;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum LoopSection
 {
@@ -12,63 +13,73 @@ public enum LoopSection
 }
 public class LoopHandler : MonoBehaviour, IDelayedStartObserver
 {
-    [SerializeField] LoopSection currentSection = LoopSection.Station;
+    [SerializeField] LoopSection currentSectionType = LoopSection.Station;
+    [SerializeField] Section defaultSection;
     private bool driveToNextStation = false;
+    private bool reachedEnd = false;
     
     [SerializeField] EnvironmentHandler envHandler;
-    SpeedController speedController;
 
     private string status = "IDLE";
-
-    private void Awake()
-    {
-        speedController = new SpeedController();
-    }
 
     [Button]
     private void DriveToNextStation()
     {
-        if (currentSection != LoopSection.Station)
+        if (currentSectionType != LoopSection.Station)
            return;
         
+        DriveHandler.Instance.ModifySection(defaultSection);
         driveToNextStation = true;
     }
     public void DelayedStart()
     {
         StartCoroutine(LoopRoutine());
+        DriveHandler.Instance.OnCurrentSectionEndReached.AddListener(OnCurrentSectionEndReached);
+    }
+    private void OnDestroy()
+    {
+        DriveHandler.Instance.OnCurrentSectionEndReached.RemoveListener(OnCurrentSectionEndReached);
+    }
+    private void OnCurrentSectionEndReached()
+    {
+        reachedEnd = true;
     }
     public IEnumerator LoopRoutine()
     {
         while (true)
         {
+            driveToNextStation = false;
             while (!driveToNextStation)
                 yield return null;
-
-
-            status = "BEGIN DRIVE";
-            currentSection = LoopSection.Drive;
-            yield return envHandler.BeginDrive();
-            status = "DRIVE";
-            yield return new WaitForSeconds(1f);
-            status = "END DRIVE";
-            yield return envHandler.EndDrive();
-            status = "STATION";
             
-            driveToNextStation = false;
-            currentSection = LoopSection.Station;
+            status = "DRIVE";
+            currentSectionType = LoopSection.Drive;
+            envHandler.BeginDrive();
+
+            reachedEnd = false;
+            while (!reachedEnd)
+                yield return null;
+            
+            status = "STATION";
+            currentSectionType = LoopSection.Station;
+            envHandler.EndDrive();
         }
     }
     void OnGUI()
     {
-        GUI.enabled = currentSection == LoopSection.Station;
-        GUILayout.Box(status);
+        GUILayout.Box(status + $" - {DriveHandler.Instance.Progression}");
         if (GUILayout.Button("Drive To Next Station"))
+        {
+            GUI.enabled = currentSectionType == LoopSection.Station;
             DriveToNextStation();
-    }
-}
+        }
 
-public class SpeedController
-{
-    public float MaxSpeed = 10f;
-    public float CurrentSpeed { get; private set; }
+        if (currentSectionType == LoopSection.Drive)
+        {
+            if (GUILayout.Button("Shovel"))
+            {
+                DriveHandler.Instance.Shovel();
+            }
+        }
+    }
 }

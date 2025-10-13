@@ -7,7 +7,7 @@ using Random = Unity.Mathematics.Random;
 
 public class EnvironmentHandler : MonoBehaviour
 {
-    [SerializeField, UnityEngine.Range(0,100)] private float currentSpeed;
+    [SerializeField, UnityEngine.Range(0,100)] private float currentSpeed => DriveHandler.Instance.Speed;
     [SerializeField, ReadOnly] EnvironmentAssetSpawner[] spawners;
 
     public const float ASSET_AREA_RADIUS = 20f;
@@ -26,32 +26,18 @@ public class EnvironmentHandler : MonoBehaviour
         foreach (var spawner in spawners)
             spawner.Refresh(translation);
     }
-    public IEnumerator BeginDrive()
+    public void BeginDrive()
     {
         foreach (var spawner in spawners)
         {
             spawner.DoSpawn = spawner.Condition == SpawnCondition.Allways || spawner.Condition == SpawnCondition.OutsideOfStation;
         }
-        return LerpSpeedRoutine(25f);     
     }    
-    public IEnumerator EndDrive()
+    public void EndDrive()
     {
         foreach (var spawner in spawners)
         {
             spawner.DoSpawn = spawner.Condition == SpawnCondition.Allways || spawner.Condition == SpawnCondition.InsideStation;
         }
-        return LerpSpeedRoutine( 0f);
     }
-    private IEnumerator LerpSpeedRoutine(float to)
-    {
-        while (Mathf.Abs(currentSpeed - to) > 0.01f)
-        {
-            currentSpeed = Mathf.Lerp(currentSpeed, to, Time.deltaTime);
-            currentSpeed = Mathf.MoveTowards(currentSpeed, to, Time.deltaTime);
-            yield return null;
-        }
-        
-        currentSpeed = to;
-    }
-
 }

@@ -283,6 +283,7 @@ MonoBehaviour:
   startupWagons:
   - {fileID: -1659991517546718722, guid: 514d7e6ed6bb94ae39849c3fd4089397, type: 2}
   - {fileID: -8922496817871734148, guid: 514d7e6ed6bb94ae39849c3fd4089397, type: 2}
+  - {fileID: -8922496817871734148, guid: 514d7e6ed6bb94ae39849c3fd4089397, type: 2}
 --- !u!4 &672896421
 Transform:
   m_ObjectHideFlags: 0
@@ -342,7 +343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efe110117d6b9a4986c41024089840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSection: 0
+  currentSectionType: 0
+  defaultSection: {fileID: 5405309646489050663, guid: 188236ddab299bf4788da4b3533a6a47, type: 2}
   envHandler: {fileID: 957439589}
 --- !u!1 &957439588
 GameObject:
@@ -373,7 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7119e4bbc46ee4a50a2f17d095a595e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSpeed: 0
   spawners:
   - {fileID: 1221735222}
   - {fileID: 47156190}
@@ -1209,7 +1210,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1025593906}
   - {fileID: 1053523501}
-  - {fileID: 896466293}
   - {fileID: 672896421}
+  - {fileID: 896466293}
   - {fileID: 238518081}
   - {fileID: 957439590}
