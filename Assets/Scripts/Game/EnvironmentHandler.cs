@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using NaughtyAttributes;
 using NUnit.Framework;
 using UnityEngine;
@@ -25,4 +26,32 @@ public class EnvironmentHandler : MonoBehaviour
         foreach (var spawner in spawners)
             spawner.Refresh(translation);
     }
+    public IEnumerator BeginDrive()
+    {
+        foreach (var spawner in spawners)
+        {
+            spawner.DoSpawn = true;
+        }
+        return LerpSpeedRoutine(25f);     
+    }    
+    public IEnumerator EndDrive()
+    {
+        foreach (var spawner in spawners)
+        {
+            spawner.DoSpawn = spawner.AlsoAtStation;
+        }
+        return LerpSpeedRoutine( 0f);
+    }
+    private IEnumerator LerpSpeedRoutine(float to)
+    {
+        while (Mathf.Abs(currentSpeed - to) > 0.01f)
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed, to, Time.deltaTime);
+            currentSpeed = Mathf.MoveTowards(currentSpeed, to, Time.deltaTime);
+            yield return null;
+        }
+        
+        currentSpeed = to;
+    }
+
 }

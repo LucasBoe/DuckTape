@@ -6,7 +6,8 @@ using UnityEngine.Serialization;
 
 public class EnvironmentAssetSpawner : MonoBehaviour
 {
-    [SerializeField] private bool doSpawn = true;
+    [SerializeField] public bool DoSpawn = true;
+    [SerializeField] public bool AlsoAtStation = false;
 
     [FormerlySerializedAs("assetRefs")] [SerializeField] private Transform[] assetDummys;
     
@@ -42,7 +43,7 @@ public class EnvironmentAssetSpawner : MonoBehaviour
         
         DeleteAccess(toDestroy);
 
-        if (!doSpawn)
+        if (!DoSpawn)
             return;
         
         TrySpawnNewAsset(smallestXPositionElement);
