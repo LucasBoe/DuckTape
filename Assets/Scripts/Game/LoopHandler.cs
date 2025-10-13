@@ -49,7 +49,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             currentSection = LoopSection.Drive;
             yield return envHandler.BeginDrive();
             status = "DRIVE";
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(1f);
             status = "END DRIVE";
             yield return envHandler.EndDrive();
             status = "STATION";

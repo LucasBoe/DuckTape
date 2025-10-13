@@ -4,10 +4,17 @@ using SS;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public enum SpawnCondition
+{
+    Allways,
+    OutsideOfStation,
+    InsideStation,
+}
+
 public class EnvironmentAssetSpawner : MonoBehaviour
 {
     [SerializeField] public bool DoSpawn = true;
-    [SerializeField] public bool AlsoAtStation = false;
+    [SerializeField] public SpawnCondition Condition = SpawnCondition.OutsideOfStation;
 
     [FormerlySerializedAs("assetRefs")] [SerializeField] private Transform[] assetDummys;
     

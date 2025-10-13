@@ -10,7 +10,7 @@ public class EnvironmentHandler : MonoBehaviour
     [SerializeField, UnityEngine.Range(0,100)] private float currentSpeed;
     [SerializeField, ReadOnly] EnvironmentAssetSpawner[] spawners;
 
-    public const float ASSET_AREA_RADIUS = 10f;
+    public const float ASSET_AREA_RADIUS = 20f;
 
     private void OnValidate()
     {
@@ -30,7 +30,7 @@ public class EnvironmentHandler : MonoBehaviour
     {
         foreach (var spawner in spawners)
         {
-            spawner.DoSpawn = true;
+            spawner.DoSpawn = spawner.Condition == SpawnCondition.Allways || spawner.Condition == SpawnCondition.OutsideOfStation;
         }
         return LerpSpeedRoutine(25f);     
     }    
@@ -38,7 +38,7 @@ public class EnvironmentHandler : MonoBehaviour
     {
         foreach (var spawner in spawners)
         {
-            spawner.DoSpawn = spawner.AlsoAtStation;
+            spawner.DoSpawn = spawner.Condition == SpawnCondition.Allways || spawner.Condition == SpawnCondition.InsideStation;
         }
         return LerpSpeedRoutine( 0f);
     }
