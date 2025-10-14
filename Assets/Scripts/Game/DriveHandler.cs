@@ -17,9 +17,12 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     [SerializeField, ReadOnly] private float currentSectionProgression;
     EngineWagonConfig engineConfig => currentEngine.Config as EngineWagonConfig;
     public Event OnCurrentSectionEndReached = new Event();
+    public float Acceleration => currentAcceleration;
     public float Progression => currentSectionProgression;
     public float Speed => currentSpeed;
+    public float DistanceLeft => currentSection == null ? 0f : (1f - currentSectionProgression) * currentSection.Length;
     public bool DoBreak => doBreak;
+    public Engine Engine => currentEngine;
 
     public void ModifyEngine(Engine engine)
     {
@@ -33,8 +36,10 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     {
         if (currentEngine == null)
             return;
+
+        float highAccelerationKeeper = (1f + .5f * engineConfig.MaxAccelleration / currentAcceleration);
         
-        currentAcceleration = Mathf.Max(Mathf.Lerp(currentAcceleration, -.1f, Time.deltaTime * engineConfig.CoalBurnRate));
+        currentAcceleration = Mathf.Max(Mathf.Lerp(currentAcceleration,  -.1f, Time.deltaTime * engineConfig.CoalBurnRate * highAccelerationKeeper));
         currentSpeed += currentAcceleration * Time.deltaTime + currentSlope * Time.deltaTime;
 
         //drag
@@ -42,7 +47,10 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
         
         //break
         if (doBreak)
+        {
             currentSpeed = Mathf.Lerp(currentSpeed, -1f, Time.deltaTime * engineConfig.BreakPower);
+            currentEngine.Sand -= Time.deltaTime * engineConfig.SandConsumption;
+        }
         
         if (currentSpeed < 0)
             currentSpeed = 0;
@@ -65,6 +73,10 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     [Button]
     public void Shovel()
     {
+        if (currentEngine.Coal <= 0)
+            return;
+        
+        currentEngine.Coal -= 1;
         currentAcceleration = Mathf.Lerp(currentAcceleration, engineConfig.MaxAccelleration, .5f);
     }
 

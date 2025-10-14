@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Engine : TrainWagonBase
 {
-
+    public int Coal;
+    public float Sand;
 }

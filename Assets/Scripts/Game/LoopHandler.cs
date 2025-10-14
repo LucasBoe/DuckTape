@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using SS;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 
 public enum LoopSection
 {
@@ -46,6 +47,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
     }
     public IEnumerator LoopRoutine()
     {
+        Refuel();
         while (true)
         {
             driveToNextStation = false;
@@ -65,11 +67,19 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             DriveHandler.Instance.Break();
             currentSectionType = LoopSection.Station;
             envHandler.EndDrive();
+            
+            Refuel();
         }
     }
+
+    private void Refuel()
+    {
+        DriveHandler.Instance.Engine.Coal = 8;
+        DriveHandler.Instance.Engine.Sand = 6f;
+    }
+
     void OnGUI()
     {
-        GUILayout.Box(status + $" - {DriveHandler.Instance.Progression}");
         if (GUILayout.Button("Drive To Next Station"))
         {
             GUI.enabled = currentSectionType == LoopSection.Station;
@@ -78,21 +88,26 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
 
         if (currentSectionType == LoopSection.Drive)
         {
-            if (GUILayout.Button("Shovel"))
+            if (GUILayout.Button($"Shovel ({DriveHandler.Instance.Engine.Coal})"))
             {
                 DriveHandler.Instance.Shovel();
             }
 
+            float sandLeft = Mathf.Round(DriveHandler.Instance.Engine.Sand * 10f) / 10f;
+        GUILayout.HorizontalSlider(DriveHandler.Instance.Acceleration, 0f,
+            ((EngineWagonConfig)DriveHandler.Instance.Engine.Config).MaxAccelleration);
+        GUILayout.Box($"{(int)DriveHandler.Instance.Speed} m/s" + $" - {(int)DriveHandler.Instance.DistanceLeft} meters");
+            
             if (DriveHandler.Instance.DoBreak)
             {
-                if (GUILayout.Button("Stop Break"))
+                if (GUILayout.Button($"({sandLeft}s) Stop Break"))
                 {
                     DriveHandler.Instance.Unbreak();
                 }
             }
             else
             {
-                if (GUILayout.Button("Break"))
+                if (GUILayout.Button($"({sandLeft}s) Break)"))
                 {
                     DriveHandler.Instance.Break();
                 }
