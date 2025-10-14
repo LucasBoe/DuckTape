@@ -53,6 +53,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
                 yield return null;
             
             status = "DRIVE";
+            DriveHandler.Instance.Unbreak();
             currentSectionType = LoopSection.Drive;
             envHandler.BeginDrive();
 
@@ -61,6 +62,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
                 yield return null;
             
             status = "STATION";
+            DriveHandler.Instance.Break();
             currentSectionType = LoopSection.Station;
             envHandler.EndDrive();
         }
@@ -79,6 +81,21 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             if (GUILayout.Button("Shovel"))
             {
                 DriveHandler.Instance.Shovel();
+            }
+
+            if (DriveHandler.Instance.DoBreak)
+            {
+                if (GUILayout.Button("Stop Break"))
+                {
+                    DriveHandler.Instance.Unbreak();
+                }
+            }
+            else
+            {
+                if (GUILayout.Button("Break"))
+                {
+                    DriveHandler.Instance.Break();
+                }
             }
         }
     }

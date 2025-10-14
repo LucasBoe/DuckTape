@@ -11,6 +11,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     [SerializeField, ReadOnly] private float currentSpeed;
     [SerializeField, ReadOnly] private float currentAcceleration = 0f;
     [SerializeField, ReadOnly] private float currentSlope;
+    [SerializeField, ReadOnly] private bool doBreak;
     
     [SerializeField, ReadOnly] private Section currentSection;
     [SerializeField, ReadOnly] private float currentSectionProgression;
@@ -18,6 +19,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public Event OnCurrentSectionEndReached = new Event();
     public float Progression => currentSectionProgression;
     public float Speed => currentSpeed;
+    public bool DoBreak => doBreak;
 
     public void ModifyEngine(Engine engine)
     {
@@ -32,9 +34,15 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
         if (currentEngine == null)
             return;
         
-        currentAcceleration = Mathf.Lerp(currentAcceleration, -4f, Time.deltaTime * engineConfig.CoalBurnRate);
-        
+        currentAcceleration = Mathf.Max(Mathf.Lerp(currentAcceleration, -.1f, Time.deltaTime * engineConfig.CoalBurnRate));
         currentSpeed += currentAcceleration * Time.deltaTime + currentSlope * Time.deltaTime;
+
+        //drag
+        currentSpeed *= (1 - Time.deltaTime / 4);
+        
+        //break
+        if (doBreak)
+            currentSpeed = Mathf.Lerp(currentSpeed, -1f, Time.deltaTime * engineConfig.BreakPower);
         
         if (currentSpeed < 0)
             currentSpeed = 0;
@@ -58,5 +66,15 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public void Shovel()
     {
         currentAcceleration = Mathf.Lerp(currentAcceleration, engineConfig.MaxAccelleration, .5f);
+    }
+
+    public void Break()
+    {
+        doBreak = true;
+    }
+
+    public void Unbreak()
+    {
+        doBreak = false;
     }
 }

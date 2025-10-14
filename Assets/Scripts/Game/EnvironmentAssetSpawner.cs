@@ -20,9 +20,11 @@ public class EnvironmentAssetSpawner : MonoBehaviour
     
     [SerializeField] private bool limitXDistance = false;
     [SerializeField] private bool limitCount = false;
+    [SerializeField] private bool limitByTrainSpeed = false;
 
     [SerializeField, ShowIf("limitXDistance")] private float minXDistance;
     [SerializeField, ShowIf("limitCount")] private float maxCount;
+    [SerializeField, ShowIf("limitByTrainSpeed")] private float maxTrainSpeed;
     
     private List<Transform> assets = new();
 
@@ -89,6 +91,9 @@ public class EnvironmentAssetSpawner : MonoBehaviour
             return;
         
         if (limitCount && assets.Count >= maxCount)
+            return;
+        
+        if (limitByTrainSpeed && DriveHandler.Instance.Speed > maxTrainSpeed)
             return;
 
         var dummy = (Transform)(assetDummys.PickRandom());
