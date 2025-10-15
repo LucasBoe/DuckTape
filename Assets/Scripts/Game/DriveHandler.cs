@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
 using NaughtyAttributes;
 using SS;
 using UnityEngine;
@@ -26,6 +29,28 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public float DistanceLeft => currentSection == null ? 0f : (1f - currentSectionProgression) * currentSection.Length;
     public bool DoBreak => doBreak;
     public Engine Engine => currentEngine;
+    protected override void Awake()
+    {
+        base.Awake();
+        StartCoroutine(CheckSpeedShakeRoutine());
+    }
+    private IEnumerator CheckSpeedShakeRoutine()
+    {
+        float shakeDuration = .2f;
+        
+        while (isActiveAndEnabled)
+        {
+            yield return new WaitForSeconds(shakeDuration);
+            if (Speed >= 0)
+            {
+                var shakeStrengthAtCurrentSpeed = GlobalBalancing.Value.ShakeOverTrainSpeedCurve.Evaluate(Speed);
+                if (shakeStrengthAtCurrentSpeed >= 0f)
+                {
+                    currentTrain.TryShakeWagonsFor(shakeStrengthAtCurrentSpeed, shakeStrengthAtCurrentSpeed);
+                }
+            } 
+        }
+    }
 
     private void OnEnable()
     {

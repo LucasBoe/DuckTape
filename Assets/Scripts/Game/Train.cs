@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class Train : MonoBehaviour
 {
     private List<TrainWagonSlot> slots = new();
+    private List<Tweener> activeShakes = new();
     public const float WAGON_DISTANCE = .5f;
     public void AppendFromConfig(WagonConfigBase wagon)
     {
@@ -45,5 +47,19 @@ public class Train : MonoBehaviour
             totalWeight += slot.WagonInstance.CalculateWeight();
         
         return totalWeight;
+    }
+    public void TryShakeWagonsFor(float shakeStrengthAtCurrentSpeed, float duration)
+    {
+        foreach (var shake in activeShakes)
+            shake.Rewind();
+        
+        activeShakes.Clear();
+        foreach (var slot in slots)
+        {
+            if (!slot.WagonInstance)
+                continue;
+            
+            activeShakes.Add(slot.WagonInstance.transform.DOShakePosition(duration, Vector3.up * shakeStrengthAtCurrentSpeed, vibrato: 100, fadeOut: false));
+        }
     }
 }
