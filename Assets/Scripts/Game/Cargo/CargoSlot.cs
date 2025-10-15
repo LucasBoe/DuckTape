@@ -10,4 +10,9 @@ public class CargoSlot : MonoBehaviour
     {
         CargoInstance = instance;
     }
+
+    public void AssignFromConfig(CargoConfigBase config)
+    {
+        Assign(CargoSpawner.Instance.Spawn(config));
+    }
 }

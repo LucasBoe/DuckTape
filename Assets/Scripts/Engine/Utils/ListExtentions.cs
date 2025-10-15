@@ -21,10 +21,10 @@ namespace SS
             list.Add(item);
             return true;
         }
-        public static object PickRandom(this IList<object> list)
+        public static T PickRandom<T>(this IList<T> list)
         {
             if (list.Count == 0)
-                return null;
+                return default;
             
             return list[Random.Range(0, list.Count)];
         }
