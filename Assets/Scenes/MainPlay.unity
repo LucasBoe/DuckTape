@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d420a48d1c6a1419c4bd241a9812bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCargo: {fileID: 0}
+  currentCargoConfig: {fileID: 0}
 --- !u!4 &94762322
 Transform:
   m_ObjectHideFlags: 0
