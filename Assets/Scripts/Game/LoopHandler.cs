@@ -6,6 +6,7 @@ using SS;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
+using Event = SS.Event;
 
 public enum LoopSection
 {
@@ -58,6 +59,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             DriveHandler.Instance.Unbreak();
             currentSectionType = LoopSection.Drive;
             envHandler.BeginDrive();
+            LoopEventHandler.Instance.OnStationExitEvent?.Invoke();
 
             reachedEnd = false;
             while (!reachedEnd)
@@ -67,6 +69,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             DriveHandler.Instance.Break();
             currentSectionType = LoopSection.Station;
             envHandler.EndDrive();
+            LoopEventHandler.Instance.OnStationEnterEvent?.Invoke();
             
             Refuel();
         }
@@ -114,4 +117,9 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             }
         }
     }
+}
+public class LoopEventHandler : Singleton<LoopEventHandler>
+{
+        public Event OnStationEnterEvent = new();
+        public Event OnStationExitEvent = new();
 }
