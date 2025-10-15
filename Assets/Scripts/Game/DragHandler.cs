@@ -15,9 +15,16 @@ public class DragHandler : SingletonBehaviour<DragHandler>
         if(Input.GetMouseButtonUp(0))
             OnMouseUp();
 
-        if(!currentCargo)
+        if(currentCargo && dragVis)
         {
-            //Drag Visual Logic
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            // For 2D, set Z to 0 so it stays in the same plane
+            mousePos.z = 0;
+
+            // Move this GameObject to that position
+            dragVis.transform.position = mousePos;
+
         }
     }
 
@@ -39,11 +46,13 @@ public class DragHandler : SingletonBehaviour<DragHandler>
             if(hit.collider.gameObject.GetComponent<CargoSlot>())
             {
                 currentCargo = hit.collider.gameObject.GetComponent<CargoSlot>().CargoInstance;
-                print(currentCargo + "");
 
+                if (!currentCargo)
+                    return;
 
                 //create Drag Visualization
                 dragVis = new GameObject();
+                dragVis.AddComponent<SpriteRenderer>().sprite = currentCargo.CargoConfig.Sprite;
             }
         }
 
@@ -70,16 +79,22 @@ public class DragHandler : SingletonBehaviour<DragHandler>
             {
                 CargoSlot targetCargo = hit.collider.gameObject.GetComponent<CargoSlot>();
 
-                if (!targetCargo)
-                {
-                    //Spawn Cargo in Cargo Slot
-                    //Destroy Old Cargo
-                }
+                print("Hit another slot");
 
-                //Destroy current Dragable Visualisation
-                
+                if (targetCargo)
+                {
+                    //Spawn new Cargo at Slot
+                    CargoSpawner.Instance.SpawnAtSlot(currentCargo.CargoConfig, targetCargo);
+
+                    //Destroy Old Cargo
+                    Destroy(currentCargo.gameObject);
+                }
             }
         }
+
+        currentCargo = null;
+
+        Destroy(dragVis);
     }
 
 }
