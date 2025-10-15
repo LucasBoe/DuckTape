@@ -40,7 +40,8 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
     }
     private void OnDestroy()
     {
-        DriveHandler.Instance.OnCurrentSectionEndReached.RemoveListener(OnCurrentSectionEndReached);
+        if (DriveHandler.InstanceExists)
+            DriveHandler.Instance.OnCurrentSectionEndReached.RemoveListener(OnCurrentSectionEndReached);
     }
     private void OnCurrentSectionEndReached()
     {
