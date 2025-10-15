@@ -10,5 +10,7 @@ public class SessionHandler : MonoBehaviour, IDelayedStartObserver
     {
         foreach (var wagon in startupWagons)
             train.AppendFromConfig(wagon);
+        
+        DriveHandler.Instance.AssignTrainInstance(train);
     }
 }

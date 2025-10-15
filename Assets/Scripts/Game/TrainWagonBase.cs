@@ -11,5 +11,5 @@ public class TrainWagonBase : MonoBehaviour
         Gizmos.DrawLine(new Vector3(-wagonConfig.Length, 10), new Vector3(-wagonConfig.Length, -10));
     }
 
-    protected virtual int CalculateWeight() => wagonConfig.EmptyWeight;
+    public virtual int CalculateWeight() => wagonConfig.EmptyWeight;
 }

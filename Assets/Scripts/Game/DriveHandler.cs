@@ -8,11 +8,13 @@ using Event = SS.Event;
 public class DriveHandler : SingletonBehaviour<DriveHandler>
 {
     [SerializeField, ReadOnly] private Engine currentEngine;
+    [SerializeField, ReadOnly] private Train currentTrain;
     [SerializeField, ReadOnly] private float currentSpeed;
+    [SerializeField, ReadOnly] private int totalWeight;
     [SerializeField, ReadOnly] private float currentAcceleration = 0f;
     [SerializeField, ReadOnly] private float currentSlope;
     [SerializeField, ReadOnly] private bool doBreak;
-    
+
     [SerializeField, ReadOnly] private Section currentSection;
     [SerializeField, ReadOnly] private float currentSectionProgression;
     EngineWagonConfig engineConfig => currentEngine.Config as EngineWagonConfig;
@@ -23,6 +25,26 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public float DistanceLeft => currentSection == null ? 0f : (1f - currentSectionProgression) * currentSection.Length;
     public bool DoBreak => doBreak;
     public Engine Engine => currentEngine;
+
+    private void OnEnable()
+    {
+        LoopEventHandler.Instance.OnStationExitEvent.AddListener(OnStationExit);
+    }
+
+    private void OnDisable()
+    {
+        LoopEventHandler.Instance.OnStationExitEvent.RemoveListener(OnStationExit);
+    }
+
+    private void OnStationExit()
+    {
+        totalWeight = currentTrain.CalculateTotalWeight();
+    }
+
+    public void AssignTrainInstance(Train train)
+    {
+        currentTrain = train;
+    }
 
     public void ModifyEngine(Engine engine)
     {
