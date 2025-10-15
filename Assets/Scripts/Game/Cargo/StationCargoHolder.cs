@@ -40,10 +40,14 @@ public class StationCargoHolder : MonoBehaviour
             newSlotInstance.gameObject.SetActive(true);
             newSlotInstance.transform.Translate(i * cargoSlotxOffset, 0f,0f);
             newSlotInstance.AssignFromConfig(cargos.All.PickRandom());
+            createdSlots.Add(newSlotInstance);
         }
     }
     private void OnStationExit()
     {
-        //delete cargo taht was left
+        for (var index = createdSlots.Count - 1; index >= 0; index--)
+            Destroy(createdSlots[index].gameObject);
+        
+        createdSlots.Clear();
     }
 }
