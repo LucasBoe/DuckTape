@@ -38,4 +38,12 @@ public class Train : MonoBehaviour
 
         return x;
     }
+    public int CalculateTotalWeight()
+    {
+        int totalWeight = 0;
+        foreach (var slot in slots)
+            totalWeight += slot.WagonInstance.CalculateWeight();
+        
+        return totalWeight;
+    }
 }

@@ -95,11 +95,12 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             {
                 DriveHandler.Instance.Shovel();
             }
-
+            
+            GUILayout.Box($"{DriveHandler.Instance.TotalWeight}kg");
             float sandLeft = Mathf.Round(DriveHandler.Instance.Engine.Sand * 10f) / 10f;
-        GUILayout.HorizontalSlider(DriveHandler.Instance.Acceleration, 0f,
+            GUILayout.HorizontalSlider(DriveHandler.Instance.Acceleration, 0f,
             ((EngineWagonConfig)DriveHandler.Instance.Engine.Config).MaxAccelleration);
-        GUILayout.Box($"{(int)DriveHandler.Instance.Speed} m/s" + $" - {(int)DriveHandler.Instance.DistanceLeft} meters");
+            GUILayout.Box($"{(int)DriveHandler.Instance.Speed} m/s" + $" - {(int)DriveHandler.Instance.DistanceLeft} meters");
             
             if (DriveHandler.Instance.DoBreak)
             {

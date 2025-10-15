@@ -8,11 +8,13 @@ using Event = SS.Event;
 public class DriveHandler : SingletonBehaviour<DriveHandler>
 {
     [SerializeField, ReadOnly] private Engine currentEngine;
+    [SerializeField, ReadOnly] private Train currentTrain;
     [SerializeField, ReadOnly] private float currentSpeed;
+    [SerializeField, ReadOnly] private int totalWeight;
     [SerializeField, ReadOnly] private float currentAcceleration = 0f;
     [SerializeField, ReadOnly] private float currentSlope;
     [SerializeField, ReadOnly] private bool doBreak;
-    
+
     [SerializeField, ReadOnly] private Section currentSection;
     [SerializeField, ReadOnly] private float currentSectionProgression;
     EngineWagonConfig engineConfig => currentEngine.Config as EngineWagonConfig;
@@ -20,9 +22,30 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public float Acceleration => currentAcceleration;
     public float Progression => currentSectionProgression;
     public float Speed => currentSpeed;
+    public int TotalWeight => totalWeight;
     public float DistanceLeft => currentSection == null ? 0f : (1f - currentSectionProgression) * currentSection.Length;
     public bool DoBreak => doBreak;
     public Engine Engine => currentEngine;
+
+    private void OnEnable()
+    {
+        LoopEventHandler.Instance.OnStationExitEvent.AddListener(OnStationExit);
+    }
+
+    private void OnDisable()
+    {
+        LoopEventHandler.Instance.OnStationExitEvent.RemoveListener(OnStationExit);
+    }
+
+    private void OnStationExit()
+    {
+        totalWeight = currentTrain.CalculateTotalWeight();
+    }
+
+    public void AssignTrainInstance(Train train)
+    {
+        currentTrain = train;
+    }
 
     public void ModifyEngine(Engine engine)
     {
@@ -40,7 +63,8 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
         float highAccelerationKeeper = (1f + .5f * engineConfig.MaxAccelleration / currentAcceleration);
         
         currentAcceleration = Mathf.Max(Mathf.Lerp(currentAcceleration,  -.1f, Time.deltaTime * engineConfig.CoalBurnRate * highAccelerationKeeper));
-        currentSpeed += currentAcceleration * Time.deltaTime + currentSlope * Time.deltaTime;
+        var accelerationTroughMass = currentAcceleration / (totalWeight / 1000);
+        currentSpeed += accelerationTroughMass * Time.deltaTime + currentSlope * Time.deltaTime;
 
         //drag
         currentSpeed *= (1 - Time.deltaTime / 4);
@@ -48,7 +72,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
         //break
         if (doBreak)
         {
-            currentSpeed = Mathf.Lerp(currentSpeed, -1f, Time.deltaTime * engineConfig.BreakPower);
+            currentSpeed = Mathf.Lerp(currentSpeed, -1f, Time.deltaTime * (engineConfig.BreakPower / (totalWeight / 1000)));
             currentEngine.Sand -= Time.deltaTime * engineConfig.SandConsumption;
         }
         
