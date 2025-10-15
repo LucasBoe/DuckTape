@@ -3,19 +3,20 @@ using UnityEngine;
 
 public class DragHandler : SingletonBehaviour<DragHandler>
 {
-    [SerializeField] private Cargo currentCargo;
+    [SerializeField] private CargoConfigBase currentCargoConfig;
 
+    private CargoSlot currentCargoSlot;
     private GameObject dragVis;
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) & !currentCargo)
+        if(Input.GetMouseButtonDown(0) & !currentCargoConfig)
             OnMouseDown();
 
         if(Input.GetMouseButtonUp(0))
             OnMouseUp();
 
-        if(currentCargo && dragVis)
+        if(currentCargoConfig && dragVis)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -45,14 +46,18 @@ public class DragHandler : SingletonBehaviour<DragHandler>
         {
             if(hit.collider.gameObject.GetComponent<CargoSlot>())
             {
-                currentCargo = hit.collider.gameObject.GetComponent<CargoSlot>().CargoInstance;
+                currentCargoSlot = hit.collider.gameObject.GetComponent<CargoSlot>();
+                currentCargoConfig = currentCargoSlot.CargoInstance.CargoConfig;
 
-                if (!currentCargo)
+                if (!currentCargoConfig)
                     return;
+
+                //Destroys old cargo
+                Destroy(hit.collider.gameObject.GetComponent<CargoSlot>().CargoInstance.gameObject);
 
                 //create Drag Visualization
                 dragVis = new GameObject();
-                dragVis.AddComponent<SpriteRenderer>().sprite = currentCargo.CargoConfig.Sprite;
+                dragVis.AddComponent<SpriteRenderer>().sprite = currentCargoConfig.Sprite;
             }
         }
 
@@ -60,8 +65,8 @@ public class DragHandler : SingletonBehaviour<DragHandler>
 
     private void OnMouseUp()
     {
-        if (!currentCargo)
-            return;
+        if (!currentCargoConfig)
+            return;           
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -79,22 +84,24 @@ public class DragHandler : SingletonBehaviour<DragHandler>
             {
                 CargoSlot targetCargo = hit.collider.gameObject.GetComponent<CargoSlot>();
 
-                print("Hit another slot");
-
                 if (targetCargo)
                 {
                     //Spawn new Cargo at Slot
-                    CargoSpawner.Instance.SpawnAtSlot(currentCargo.CargoConfig, targetCargo);
-
-                    //Destroy Old Cargo
-                    Destroy(currentCargo.gameObject);
+                    CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, targetCargo);
                 }
             }
         }
 
-        currentCargo = null;
+        else
+        {
+            CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, currentCargoSlot);
+        }
+
+        currentCargoConfig = null;
+        currentCargoSlot = null;
 
         Destroy(dragVis);
+
     }
 
 }
