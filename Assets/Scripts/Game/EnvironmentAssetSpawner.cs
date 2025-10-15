@@ -4,17 +4,27 @@ using SS;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public enum SpawnCondition
+{
+    Allways,
+    OutsideOfStation,
+    InsideStation,
+}
+
 public class EnvironmentAssetSpawner : MonoBehaviour
 {
-    [SerializeField] private bool doSpawn = true;
+    [SerializeField] public bool DoSpawn = true;
+    [SerializeField] public SpawnCondition Condition = SpawnCondition.OutsideOfStation;
 
     [FormerlySerializedAs("assetRefs")] [SerializeField] private Transform[] assetDummys;
     
     [SerializeField] private bool limitXDistance = false;
     [SerializeField] private bool limitCount = false;
+    [SerializeField] private bool limitByTrainSpeed = false;
 
     [SerializeField, ShowIf("limitXDistance")] private float minXDistance;
     [SerializeField, ShowIf("limitCount")] private float maxCount;
+    [SerializeField, ShowIf("limitByTrainSpeed")] private float maxTrainSpeed;
     
     private List<Transform> assets = new();
 
@@ -42,7 +52,7 @@ public class EnvironmentAssetSpawner : MonoBehaviour
         
         DeleteAccess(toDestroy);
 
-        if (!doSpawn)
+        if (!DoSpawn)
             return;
         
         TrySpawnNewAsset(smallestXPositionElement);
@@ -81,6 +91,9 @@ public class EnvironmentAssetSpawner : MonoBehaviour
             return;
         
         if (limitCount && assets.Count >= maxCount)
+            return;
+        
+        if (limitByTrainSpeed && DriveHandler.Instance.Speed > maxTrainSpeed)
             return;
 
         var dummy = (Transform)(assetDummys.PickRandom());

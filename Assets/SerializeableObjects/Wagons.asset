@@ -32,6 +32,10 @@ MonoBehaviour:
   assetGUID: -14040
   prefab: {fileID: 3950876186130322557, guid: edf125b2a188741649ac9ff619a24982, type: 3}
   length: 8
+  CoalBurnRate: 0.05
+  MaxAccelleration: 12
+  BreakPower: 2
+  SandConsumption: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

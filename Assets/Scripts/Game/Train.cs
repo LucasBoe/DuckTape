@@ -19,7 +19,9 @@ public class Train : MonoBehaviour
         TrainWagonSlot newSlot = newSlotGameObject.AddComponent<TrainWagonSlot>();
         slots.Add(newSlot);
         
-        WagonSpawner.Instance.SpawnWagon(wagon, newSlot);
+        var newWagonInstance = WagonSpawner.Instance.SpawnWagon(wagon, newSlot);
+        if (newWagonInstance is Engine engine)
+            DriveHandler.Instance.ModifyEngine(engine);
     }
 
     private float CalculateTrainLength()
