@@ -203,7 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d420a48d1c6a1419c4bd241a9812bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCargoConfig: {fileID: 0}
+  pickUpEffect: {fileID: 4178091508319747743, guid: 67055e25865df99419604f7809444e31, type: 3}
+  dropEffect: {fileID: 4178091508319747743, guid: 808e187024e214e4783475cad5882908, type: 3}
 --- !u!4 &94762322
 Transform:
   m_ObjectHideFlags: 0

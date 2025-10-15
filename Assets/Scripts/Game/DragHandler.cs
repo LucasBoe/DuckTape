@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class DragHandler : SingletonBehaviour<DragHandler>
 {
-    [SerializeField] private CargoConfigBase currentCargoConfig;
+    [SerializeField] private GameObject pickUpEffect, dropEffect;
 
+    private CargoConfigBase currentCargoConfig;
     private CargoSlot currentCargoSlot;
     private GameObject dragVis;
 
@@ -52,6 +53,9 @@ public class DragHandler : SingletonBehaviour<DragHandler>
                 if (!currentCargoConfig)
                     return;
 
+                //Do pickup Effect
+                Instantiate(pickUpEffect, currentCargoSlot.transform.position, Quaternion.identity);
+
                 //Destroys old cargo
                 Destroy(hit.collider.gameObject.GetComponent<CargoSlot>().CargoInstance.gameObject);
 
@@ -88,6 +92,9 @@ public class DragHandler : SingletonBehaviour<DragHandler>
                 {
                     //Spawn new Cargo at Slot
                     CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, targetCargo);
+
+                    //Spawn effect of placing in slot
+                    Instantiate(dropEffect, targetCargo.transform.position, Quaternion.identity);
                 }
             }
         }

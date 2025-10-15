@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3031058838543002772}
   - component: {fileID: 4447812870793620433}
   m_Layer: 0
-  m_Name: VFX_Base
+  m_Name: VFX_Drop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -1151352383, guid: e57b8dede5902b14ba0d5980e5db7995, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startOnAwake: 1
-  time: 3
+  time: 2
 --- !u!82 &4447812870793620433
 AudioSource:
   m_ObjectHideFlags: 0
