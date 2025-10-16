@@ -69,6 +69,8 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             
             envHandler.EndDriveEvent?.Invoke();
             currentSectionType = LoopSection.Station;
+
+            StatTracker.Instance.NumberOfStationsVisited++;
             
             yield return DriveHandler.Instance.AnimateToStillIn(100f);
             
@@ -123,8 +125,9 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
         }
     }
 }
+
 public class LoopEventHandler : Singleton<LoopEventHandler>
 {
-        public Event OnStationEnterEvent = new();
-        public Event OnStationExitEvent = new();
+    public Event OnStationEnterEvent = new();
+    public Event OnStationExitEvent = new();
 }

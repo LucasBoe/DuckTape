@@ -1,25 +1,28 @@
+using NaughtyAttributes;
 using SS;
 using UnityEngine;
+using UnityEngine.Serialization;
 
+[SingletonSettings(SingletonLifetime.Scene, _canBeGenerated: false, _eager: true)]
 public class DragHandler : SingletonBehaviour<DragHandler>
 {
     [SerializeField] private GameObject pickUpEffect, dropEffect;
-    [SerializeField] private CargoConfigBase currentCargoConfig;
-    [SerializeField] private CargoSlot currentCargoSlot;
-    private GameObject dragVis;
+    [SerializeField, ReadOnly] private Cargo cargoInHand;
+    [SerializeField, ReadOnly] private CargoSlot lastCargoSlot;
+    [SerializeField, ReadOnly] private Transform dragRoot;
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) & !currentCargoConfig)
+        if(Input.GetMouseButtonUp(0) && cargoInHand)
+            OnMouseUp();
+        
+        if(Input.GetMouseButtonDown(0) & !cargoInHand)
             OnMouseDown();
 
-        if(Input.GetMouseButtonUp(0))
-            OnMouseUp();
-
-        if(currentCargoConfig && dragVis)
+        if(cargoInHand && dragRoot)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            dragVis.transform.position = mousePos;
+            dragRoot.transform.position = mousePos;
         }
     }
 
@@ -30,42 +33,35 @@ public class DragHandler : SingletonBehaviour<DragHandler>
             if (!slot.ContainsCargo)
                 return;
 
-            currentCargoSlot = slot;
-            currentCargoConfig = slot.CargoInstance.Config;
+            lastCargoSlot = slot;
 
             //Do pickup Effect
-            PlayEffect(pickUpEffect, currentCargoSlot);
-
-            //Destroys old cargo
-            Destroy(currentCargoSlot.CargoInstance.gameObject);
+            PlayEffect(pickUpEffect, lastCargoSlot);
 
             //create Drag Visualization
-            dragVis = new GameObject();
-            dragVis.AddComponent<SpriteRenderer>().sprite = currentCargoConfig.Sprite;
-
+            dragRoot = new GameObject("DRAG").transform;
+            cargoInHand = lastCargoSlot.ExtractCargo();
+            cargoInHand.transform.SetParent(dragRoot.transform);
+            cargoInHand.transform.localPosition = Vector3.zero;
         }
     }
     private void OnMouseUp()
     {
-        if (!currentCargoConfig)
-            return;
-        
         // Check if the ray hit something
-        if (RaycastMouseForCargoSlot(out var targetCargo) && !targetCargo.ContainsCargo)
+        if (RaycastMouseForCargoSlot(out var targetSlot) && targetSlot.TryAssign(cargoInHand))
         {
-            CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, targetCargo);
-            PlayEffect(dropEffect, targetCargo);
+            PlayEffect(dropEffect, targetSlot);
         }
         else
         {
-            CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, currentCargoSlot);
-            PlayEffect(dropEffect, currentCargoSlot);
+            lastCargoSlot.TryAssign(cargoInHand);
+            PlayEffect(dropEffect, lastCargoSlot);
         }
 
-        currentCargoConfig = null;
-        currentCargoSlot = null;
+        cargoInHand = null;
+        lastCargoSlot = null;
 
-        Destroy(dragVis);
+        Destroy(dragRoot.gameObject);
     }
 
     private bool RaycastMouseForCargoSlot(out CargoSlot slot)

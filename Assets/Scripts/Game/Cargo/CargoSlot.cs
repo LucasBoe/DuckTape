@@ -7,16 +7,20 @@ public class CargoSlot : MonoBehaviour
     public Cargo CargoInstance;
     public bool ContainsCargo => CargoInstance;
 
-    public void Assign(Cargo instance)
+    public virtual bool TryAssign(Cargo instance)
     {
+        if (ContainsCargo)
+            return false;
+            
         CargoInstance = instance;
         instance.transform.SetParent(transform);
         instance.transform.localPosition = Vector3.zero;
+        return true;
     }
 
     public void AssignFromConfig(CargoConfigBase config)
     {
-        Assign(CargoSpawner.Instance.Spawn(config));
+        TryAssign(CargoSpawner.Instance.Spawn(config));
     }
 
     public Cargo ExtractCargo()
