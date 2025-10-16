@@ -11,7 +11,7 @@ public enum SpawnCondition
     InsideStation,
 }
 
-public class EnvironmentAssetSpawner : MonoBehaviour
+public class EnvironmentAssetSpawner : MonoBehaviour, IEnvironmentAsset
 {
     [SerializeField] public bool DoSpawn = true;
     [SerializeField] public SpawnCondition Condition = SpawnCondition.OutsideOfStation;
@@ -27,6 +27,7 @@ public class EnvironmentAssetSpawner : MonoBehaviour
     [SerializeField, ShowIf("limitByTrainSpeed")] private float maxTrainSpeed;
     
     private List<Transform> assets = new();
+    private EnvironmentHandler handler;
 
     private void OnValidate()
     {
@@ -43,7 +44,18 @@ public class EnvironmentAssetSpawner : MonoBehaviour
             dummy.gameObject.SetActive(false);
         }
     }
-
+    private void OnEnable()
+    {
+        handler.BeginDriveEvent.AddListener(OnBeginDrive);
+        handler.EndDriveEvent.AddListener(OnEndDrive);
+    }
+    private void OnDisable()
+    {
+        handler.BeginDriveEvent.RemoveListener(OnBeginDrive);
+        handler.EndDriveEvent.RemoveListener(OnEndDrive);
+    }
+    private void OnBeginDrive() => DoSpawn = Condition == SpawnCondition.Allways || Condition == SpawnCondition.OutsideOfStation;
+    private void OnEndDrive() => DoSpawn = Condition == SpawnCondition.Allways || Condition == SpawnCondition.InsideStation;
     public void Refresh(float translation)
     {
         List<GameObject> toDestroy = new List<GameObject>();
@@ -58,6 +70,10 @@ public class EnvironmentAssetSpawner : MonoBehaviour
         TrySpawnNewAsset(smallestXPositionElement);
     }
 
+    public void Connect(EnvironmentHandler handler)
+    {
+        this.handler = handler;
+    }
     private float TranslateAllAssets(float translation, ref List<GameObject> toDestroy)
     {
         float smallestXPositionElement = -EnvironmentHandler.ASSET_AREA_RADIUS;
@@ -102,4 +118,10 @@ public class EnvironmentAssetSpawner : MonoBehaviour
         newAsset.gameObject.SetActive(true);
         assets.Add(newAsset);
     }
+}
+
+public interface IEnvironmentAsset
+{
+    public void Refresh(float translation);
+    void Connect(EnvironmentHandler handler);
 }

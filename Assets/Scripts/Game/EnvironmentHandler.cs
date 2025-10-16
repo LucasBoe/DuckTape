@@ -1,20 +1,25 @@
-using System;
-using System.Collections;
-using NaughtyAttributes;
-using NUnit.Framework;
+
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
+using UnityEngine.Serialization;
+using Event = SS.Event;
 
 public class EnvironmentHandler : MonoBehaviour
 {
     [SerializeField, UnityEngine.Range(0,100)] private float currentSpeed => DriveHandler.Instance.Speed;
-    [SerializeField, ReadOnly] EnvironmentAssetSpawner[] spawners;
+    [SerializeField] IEnvironmentAsset[] spawners;
 
     public const float ASSET_AREA_RADIUS = 20f;
+    
+    [FormerlySerializedAs("OnBeginDrive")] public Event BeginDriveEvent = new();
+    [FormerlySerializedAs("OnEndDrive")] public Event EndDriveEvent = new();
 
     private void OnValidate()
     {
-        spawners = GetComponentsInChildren<EnvironmentAssetSpawner>();
+        spawners = GetComponentsInChildren<IEnvironmentAsset>();
+        foreach (var spawner in spawners)
+        {
+            spawner.Connect(this);
+        }
     }
     private void Update()
     {
@@ -25,19 +30,5 @@ public class EnvironmentHandler : MonoBehaviour
 
         foreach (var spawner in spawners)
             spawner.Refresh(translation);
-    }
-    public void BeginDrive()
-    {
-        foreach (var spawner in spawners)
-        {
-            spawner.DoSpawn = spawner.Condition == SpawnCondition.Allways || spawner.Condition == SpawnCondition.OutsideOfStation;
-        }
-    }    
-    public void EndDrive()
-    {
-        foreach (var spawner in spawners)
-        {
-            spawner.DoSpawn = spawner.Condition == SpawnCondition.Allways || spawner.Condition == SpawnCondition.InsideStation;
-        }
     }
 }

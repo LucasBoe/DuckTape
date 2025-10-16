@@ -20,6 +20,13 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
 
     [SerializeField, ReadOnly] private Section currentSection;
     [SerializeField, ReadOnly] private float currentSectionProgression;
+    
+    [SerializeField, ReadOnly] private bool isInStation = false;
+    [SerializeField, ReadOnly] private float currentMetersUntilStop = 100f;
+    [SerializeField, ReadOnly] private float maxMetersUntilStop = 100f;
+    [SerializeField, ReadOnly] private float speedWhenEnteringStation = 0;
+    [SerializeField, ReadOnly] private float accelerationWhenEnteringStation = 0;
+
     EngineWagonConfig engineConfig => currentEngine.Config as EngineWagonConfig;
     public Event OnCurrentSectionEndReached = new Event();
     public float Acceleration => currentAcceleration;
@@ -82,41 +89,64 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     }
     private void Update()
     {
-        if (currentEngine == null)
-            return;
-
-        float highAccelerationKeeper = (1f + .5f * engineConfig.MaxAccelleration / currentAcceleration);
-        
-        currentAcceleration = Mathf.Max(Mathf.Lerp(currentAcceleration,  -.1f, Time.deltaTime * engineConfig.CoalBurnRate * highAccelerationKeeper));
-        var accelerationTroughMass = currentAcceleration / (totalWeight / 1000);
-        currentSpeed += accelerationTroughMass * Time.deltaTime + currentSlope * Time.deltaTime;
-
-        //drag
-        currentSpeed *= (1 - Time.deltaTime / 4);
-        
-        //break
-        if (doBreak)
+        if (isInStation)
         {
-            currentSpeed = Mathf.Lerp(currentSpeed, -1f, Time.deltaTime * (engineConfig.BreakPower / (totalWeight / 1000)));
-            currentEngine.Sand -= Time.deltaTime * engineConfig.SandConsumption;
+            float l = 1f - currentMetersUntilStop / maxMetersUntilStop;
+            currentAcceleration = Mathf.Lerp(accelerationWhenEnteringStation, 0f, l);
+            currentSpeed = Mathf.Lerp(speedWhenEnteringStation, .1f, l);
+            currentMetersUntilStop -= currentSpeed * Time.deltaTime;
         }
-        
-        if (currentSpeed < 0)
-            currentSpeed = 0;
-        
-        if (currentSection == null)
-            return;
-        
-        currentSectionProgression += currentSpeed / currentSection.Length * Time.deltaTime;
-        currentSlope = currentSection.SlopeOverSection.Evaluate(currentSectionProgression);
-        Camera.main.transform.rotation = Quaternion.Euler(0, 0, currentSlope);
-        
-        if (currentSectionProgression >= 1f)
+        else
         {
-            OnCurrentSectionEndReached?.Invoke();
-            currentSectionProgression = 0f;
-            currentSection = null;
+            if (currentEngine == null)
+                return;
+
+            float highAccelerationKeeper = (1f + .5f * engineConfig.MaxAccelleration / currentAcceleration);
+            
+            currentAcceleration = Mathf.Max(Mathf.Lerp(currentAcceleration,  -.1f, Time.deltaTime * engineConfig.CoalBurnRate * highAccelerationKeeper));
+            var accelerationTroughMass = currentAcceleration / (totalWeight / 1000);
+            currentSpeed += accelerationTroughMass * Time.deltaTime + currentSlope * Time.deltaTime;
+
+            //drag
+            currentSpeed *= (1 - Time.deltaTime / 4);
+            
+            //break
+            if (doBreak)
+            {
+                currentSpeed = Mathf.Lerp(currentSpeed, -1f, Time.deltaTime * (engineConfig.BreakPower / (totalWeight / 1000)));
+                currentEngine.Sand -= Time.deltaTime * engineConfig.SandConsumption;
+            }
+            
+            if (currentSpeed < 0)
+                currentSpeed = 0;
+            
+            if (currentSection == null)
+                return;
+            
+            currentSectionProgression += currentSpeed / currentSection.Length * Time.deltaTime;
+            currentSlope = currentSection.SlopeOverSection.Evaluate(currentSectionProgression);
+            Camera.main.transform.rotation = Quaternion.Euler(0, 0, currentSlope);
+            
+            if (currentSectionProgression >= 1f)
+            {
+                OnCurrentSectionEndReached?.Invoke();
+                currentSectionProgression = 0f;
+                currentSection = null;
+            }
         }
+    }
+    public IEnumerator AnimateToStillIn(float meters)
+    {
+        isInStation = true;
+        currentMetersUntilStop = meters;
+        maxMetersUntilStop = meters;
+        speedWhenEnteringStation = currentSpeed;
+        accelerationWhenEnteringStation = currentAcceleration;
+
+        while (currentSpeed > .1f)
+            yield return null;
+        
+        isInStation = false;
     }
 
     [Button]

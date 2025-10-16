@@ -56,20 +56,23 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             while (!driveToNextStation)
                 yield return null;
             
+            envHandler.BeginDriveEvent?.Invoke();
+            currentSectionType = LoopSection.Drive;
+            
             status = "DRIVE";
             DriveHandler.Instance.Unbreak();
-            currentSectionType = LoopSection.Drive;
-            envHandler.BeginDrive();
             LoopEventHandler.Instance.OnStationExitEvent?.Invoke();
 
             reachedEnd = false;
             while (!reachedEnd)
                 yield return null;
             
-            status = "STATION";
-            DriveHandler.Instance.Break();
+            envHandler.EndDriveEvent?.Invoke();
             currentSectionType = LoopSection.Station;
-            envHandler.EndDrive();
+            
+            yield return DriveHandler.Instance.AnimateToStillIn(100f);
+            
+            status = "STATION";
             LoopEventHandler.Instance.OnStationEnterEvent?.Invoke();
             
             Refuel();

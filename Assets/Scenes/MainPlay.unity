@@ -469,10 +469,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7119e4bbc46ee4a50a2f17d095a595e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawners:
-  - {fileID: 1221735222}
-  - {fileID: 47156190}
-  - {fileID: 2001122287}
+  BeginDriveEvent:
+    TargetObjs: []
+    lastInvoked: -1
+  EndDriveEvent:
+    TargetObjs: []
+    lastInvoked: -1
 --- !u!4 &957439590
 Transform:
   m_ObjectHideFlags: 0
@@ -1317,20 +1319,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2001122285}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77207e63dd994f8caaea5ee0b9c38001, type: 3}
+  m_Script: {fileID: 11500000, guid: c56999f5ff87420d8046947132cdae27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DoSpawn: 1
-  Condition: 2
-  assetDummys:
-  - {fileID: 1383869591}
-  - {fileID: 1402808908}
-  limitXDistance: 0
-  limitCount: 1
-  limitByTrainSpeed: 1
-  minXDistance: 20
-  maxCount: 1
-  maxTrainSpeed: 10
 --- !u!1 &2087575870
 GameObject:
   m_ObjectHideFlags: 0

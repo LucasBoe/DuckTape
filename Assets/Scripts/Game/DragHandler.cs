@@ -4,9 +4,8 @@ using UnityEngine;
 public class DragHandler : SingletonBehaviour<DragHandler>
 {
     [SerializeField] private GameObject pickUpEffect, dropEffect;
-
-    [SerializeField]private CargoConfigBase currentCargoConfig;
-    [SerializeField]private CargoSlot currentCargoSlot;
+    [SerializeField] private CargoConfigBase currentCargoConfig;
+    [SerializeField] private CargoSlot currentCargoSlot;
     private GameObject dragVis;
 
     private void Update()
@@ -52,31 +51,15 @@ public class DragHandler : SingletonBehaviour<DragHandler>
             return;
         
         // Check if the ray hit something
-        if (RaycastMouseForCargoSlot(out var targetCargo))
+        if (RaycastMouseForCargoSlot(out var targetCargo) && !targetCargo.ContainsCargo)
         {
-            if(targetCargo.ContainsCargo)
-            {
-                CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, currentCargoSlot);
-
-                //Spawn effect of placing in slot
-                Instantiate(dropEffect, currentCargoSlot.transform.position, Quaternion.identity);
-                PlayEffect(dropEffect, currentCargoSlot);
-            }
-            else
-            {
-                CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, targetCargo);
-
-                //Spawn effect of placing in slot
-                Instantiate(dropEffect, targetCargo.transform.position, Quaternion.identity);
-                PlayEffect(dropEffect, targetCargo);
-            }
+            CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, targetCargo);
+            PlayEffect(dropEffect, targetCargo);
         }
         else
         {
             CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, currentCargoSlot);
-
-            //Spawn effect of placing in slot
-            Instantiate(dropEffect, currentCargoSlot.transform.position, Quaternion.identity);
+            PlayEffect(dropEffect, currentCargoSlot);
         }
 
         currentCargoConfig = null;
