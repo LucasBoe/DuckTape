@@ -5,8 +5,8 @@ public class DragHandler : SingletonBehaviour<DragHandler>
 {
     [SerializeField] private GameObject pickUpEffect, dropEffect;
 
-    private CargoConfigBase currentCargoConfig;
-    private CargoSlot currentCargoSlot;
+    [SerializeField]private CargoConfigBase currentCargoConfig;
+    [SerializeField]private CargoSlot currentCargoSlot;
     private GameObject dragVis;
 
     private void Update()
@@ -33,25 +33,28 @@ public class DragHandler : SingletonBehaviour<DragHandler>
     private void OnMouseDown()
     {
         // Convert mouse position to world coordinates
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        // Fire a ray from the camera toward the mouse position
-        Vector2 rayOrigin = Camera.main.transform.position;
-        Vector2 direction = (mousePos - rayOrigin).normalized;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         // Perform the raycast
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, 10f);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
         // Check if the ray hit something
         if (hit.collider != null)
         {
-            if(hit.collider.gameObject.GetComponent<CargoSlot>())
+            if (hit.collider.gameObject.GetComponent<CargoSlot>())
             {
                 currentCargoSlot = hit.collider.gameObject.GetComponent<CargoSlot>();
+
+                if (!currentCargoSlot.CargoInstance)
+                    return;
+
                 currentCargoConfig = currentCargoSlot.CargoInstance.CargoConfig;
 
                 if (!currentCargoConfig)
+                {
+                    currentCargoSlot = null;
                     return;
+                }
 
                 //Do pickup Effect
                 Instantiate(pickUpEffect, currentCargoSlot.transform.position, Quaternion.identity);
@@ -70,16 +73,13 @@ public class DragHandler : SingletonBehaviour<DragHandler>
     private void OnMouseUp()
     {
         if (!currentCargoConfig)
-            return;           
+            return;
 
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        // Fire a ray from the camera toward the mouse position
-        Vector2 rayOrigin = Camera.main.transform.position;
-        Vector2 direction = (mousePos - rayOrigin).normalized;
+        // Convert mouse position to world coordinates
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         // Perform the raycast
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, 10f);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
         // Check if the ray hit something
         if (hit.collider != null)
@@ -90,11 +90,23 @@ public class DragHandler : SingletonBehaviour<DragHandler>
 
                 if (targetCargo)
                 {
-                    //Spawn new Cargo at Slot
-                    CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, targetCargo);
+                    if(targetCargo.CargoInstance != null)
+                    {
+                        CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, currentCargoSlot);
 
-                    //Spawn effect of placing in slot
-                    Instantiate(dropEffect, targetCargo.transform.position, Quaternion.identity);
+                        //Spawn effect of placing in slot
+                        Instantiate(dropEffect, currentCargoSlot.transform.position, Quaternion.identity);
+                    }
+
+                    else
+                    {
+                        //Spawn new Cargo at Slot
+                        CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, targetCargo);
+
+                        //Spawn effect of placing in slot
+                        Instantiate(dropEffect, targetCargo.transform.position, Quaternion.identity);
+                    }
+
                 }
             }
         }
@@ -102,6 +114,9 @@ public class DragHandler : SingletonBehaviour<DragHandler>
         else
         {
             CargoSpawner.Instance.SpawnAtSlot(currentCargoConfig, currentCargoSlot);
+
+            //Spawn effect of placing in slot
+            Instantiate(dropEffect, currentCargoSlot.transform.position, Quaternion.identity);
         }
 
         currentCargoConfig = null;

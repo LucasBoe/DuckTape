@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Container: {fileID: 11400000}
   assetGUID: -62298
-  sprite: {fileID: 4727633781103762509, guid: 55e3aba775c851b4b87b00553e17ac08, type: 3}
+  type: 0
+  sprite: {fileID: 21300000, guid: 55e3aba775c851b4b87b00553e17ac08, type: 3}
   value: 5
   weight: 5
 --- !u!114 &11400000
