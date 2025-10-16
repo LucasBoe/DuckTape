@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 55e3aba775c851b4b87b00553e17ac08
+guid: c9011c460c7e6c940a2a67523335629e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4727633781103762509
-    second: Box_0
+      213: -7069271483572719964
+    second: SmallCargoWagon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Box_0
+      name: SmallCargoWagon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 39
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d4c93d630edeb9140800000000000000
-      internalID: 4727633781103762509
+      spriteID: 4ae69d05a07e4ed90800000000000000
+      internalID: -7069271483572719964
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 7c8f80a2594e375429b67aaef0bee86a
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Box_0: 4727633781103762509
+      SmallCargoWagon_0: -7069271483572719964
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
