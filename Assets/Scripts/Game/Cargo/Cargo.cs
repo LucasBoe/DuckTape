@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Cargo : MonoBehaviour
 {
-    public CargoConfigBase CargoConfig;
+    [FormerlySerializedAs("CargoConfig")] public CargoConfigBase Config;
 }

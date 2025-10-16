@@ -5,6 +5,7 @@ using UnityEngine;
 public class CargoSlot : MonoBehaviour
 {
     public Cargo CargoInstance;
+    public bool ContainsCargo => CargoInstance;
 
     public void Assign(Cargo instance)
     {
@@ -16,5 +17,12 @@ public class CargoSlot : MonoBehaviour
     public void AssignFromConfig(CargoConfigBase config)
     {
         Assign(CargoSpawner.Instance.Spawn(config));
+    }
+
+    public Cargo ExtractCargo()
+    {
+        var cargo = CargoInstance;
+        CargoInstance = null;
+        return cargo;
     }
 }
