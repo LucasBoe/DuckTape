@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using NaughtyAttributes;
 using SS;
+using Unity.Cinemachine;
 using UnityEngine;
 using Event = SS.Event;
 
@@ -125,7 +126,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
             
             currentSectionProgression += currentSpeed / currentSection.Length * Time.deltaTime;
             currentSlope = currentSection.SlopeOverSection.Evaluate(currentSectionProgression);
-            Camera.main.transform.rotation = Quaternion.Euler(0, 0, currentSlope);
+            currentTrain.Camera.transform.rotation = Quaternion.Euler(0, 0, currentSlope);
             
             if (currentSectionProgression >= 1f)
             {

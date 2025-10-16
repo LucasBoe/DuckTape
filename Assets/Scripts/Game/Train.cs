@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Train : MonoBehaviour
@@ -8,6 +9,7 @@ public class Train : MonoBehaviour
     private List<TrainWagonSlot> slots = new();
     private List<Tweener> activeShakes = new();
     public const float WAGON_DISTANCE = 1f/16f;
+    [SerializeField] public CinemachineCamera Camera; 
     public void AppendFromConfig(WagonConfigBase wagon)
     {
         //find new slot x

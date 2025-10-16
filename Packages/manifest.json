@@ -1,9 +1,10 @@
 {
   "dependencies": {
-   "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
+    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.1",
     "com.lucasboe.scriptable-events": "https://github.com/lucasboe/scriptable-events.git",
     "com.lucasboe.simple-sound-system": "https://github.com/lucasboe/simple-sound-system.git",
+    "com.unity.cinemachine": "3.1.4",
     "com.unity.collab-proxy": "2.10.0",
     "com.unity.feature.2d": "2.0.1",
     "com.unity.ide.rider": "3.0.36",
