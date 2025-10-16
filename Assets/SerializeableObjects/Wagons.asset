@@ -10,13 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6294d23842ef9462ab8df2b3a33cde9e, type: 3}
-  m_Name: Cart_Default
+  m_Name: Cart_CargoSmall
   m_EditorClassIdentifier: 
   Container: {fileID: 11400000}
   assetGUID: -14148
-  prefab: {fileID: 2089143345808602313, guid: a6af604a60c1b44b48cb9966d38b4771, type: 3}
-  length: 6.99
-  EmptyWeight: 400
+  prefab: {fileID: 8470376246543035952, guid: c670428bd4888b3498042ad6af7ac2fb, type: 3}
+  length: 2.31
+  EmptyWeight: 300
+--- !u!114 &-4167193673302700741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6294d23842ef9462ab8df2b3a33cde9e, type: 3}
+  m_Name: Cart_Passenger
+  m_EditorClassIdentifier: 
+  Container: {fileID: 11400000}
+  assetGUID: -639796
+  prefab: {fileID: 8470376246543035952, guid: 3686487bf5e2d3d43b589f7e6b94ffd5, type: 3}
+  length: 3.0625
+  EmptyWeight: 700
 --- !u!114 &-1659991517546718722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,3 +72,4 @@ MonoBehaviour:
   Contained:
   - {fileID: -1659991517546718722}
   - {fileID: -8922496817871734148}
+  - {fileID: -4167193673302700741}

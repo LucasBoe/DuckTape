@@ -7,7 +7,7 @@ public class Train : MonoBehaviour
 {
     private List<TrainWagonSlot> slots = new();
     private List<Tweener> activeShakes = new();
-    public const float WAGON_DISTANCE = .5f;
+    public const float WAGON_DISTANCE = 1f/16f;
     public void AppendFromConfig(WagonConfigBase wagon)
     {
         //find new slot x
