@@ -9,6 +9,8 @@ public class CargoSlot : MonoBehaviour
     public void Assign(Cargo instance)
     {
         CargoInstance = instance;
+        instance.transform.SetParent(transform);
+        instance.transform.localPosition = Vector3.zero;
     }
 
     public void AssignFromConfig(CargoConfigBase config)
