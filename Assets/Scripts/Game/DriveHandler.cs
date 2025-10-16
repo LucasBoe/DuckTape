@@ -46,7 +46,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
                 var shakeStrengthAtCurrentSpeed = GlobalBalancing.Value.ShakeOverTrainSpeedCurve.Evaluate(Speed);
                 if (shakeStrengthAtCurrentSpeed >= 0f)
                 {
-                    currentTrain.TryShakeWagonsFor(shakeStrengthAtCurrentSpeed, shakeStrengthAtCurrentSpeed);
+                    currentTrain?.TryShakeWagonsFor(shakeStrengthAtCurrentSpeed, shakeStrengthAtCurrentSpeed);
                 }
             } 
         }
