@@ -16,7 +16,7 @@ public class Passenger : HoverableMonoBehaviour
 
     public int StationsLeft = 0;
     public PassengerState State = PassengerState.Station;
-    private void Start()
+    public void Init()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         StationsLeft = Random.Range(minStationsToTravel, maxStationsToTravel);

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -7,6 +8,7 @@ public class StationPassengerHolder : MonoBehaviour
 {
     [FormerlySerializedAs("dummy")] [SerializeField] private Passenger prefab;
     List<Passenger> passengers = new();
+    public int AmountToSpawn;
     private void Awake()
     {
         prefab.gameObject.SetActive(false);
@@ -23,11 +25,21 @@ public class StationPassengerHolder : MonoBehaviour
     }
     private void OnStationEnter()
     {
-        var instance = Instantiate(prefab, transform);
-        instance.gameObject.SetActive(true);
-        instance.transform.localPosition = Vector3.zero;
-        passengers.Add(instance);
+        SpawnPassengers();
     }
+    [Button]
+    private void SpawnPassengers()
+    {
+        for (int i = 0; i < AmountToSpawn; i++)
+        {
+            var instance = Instantiate(prefab, transform);
+            instance.gameObject.SetActive(true);
+            instance.transform.localPosition = new Vector3(i * .4f, 0f, 0f);
+            instance.Init();
+            passengers.Add(instance);
+        }
+    }
+
     private void OnStationExit()
     {
         foreach (var passenger in passengers)

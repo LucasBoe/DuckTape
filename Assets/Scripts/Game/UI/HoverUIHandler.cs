@@ -39,9 +39,16 @@ public class HoverUIHandler : MonoBehaviour
         for (var index = instances.Count - 1; index >= 0; index--)
         {
             var instance = instances[index];
-            instances.RemoveAt(index);
-            instance.transform.DOScale(0, .2f).SetEase(Ease.OutSine);
-            Destroy(instance.gameObject, 3f);
+            if (instance.IsHovered)
+            {
+                instance.HoverExitEvent.AddListener(() => CheckEndHover(behaviour));
+            }
+            else
+            {
+                instances.RemoveAt(index);
+                instance.transform.DOScale(0, .2f).SetEase(Ease.OutSine);
+                Destroy(instance.gameObject, 3f);
+            }
         }
     }
     private void CheckBeginHover(HoverableMonoBehaviour behaviour)

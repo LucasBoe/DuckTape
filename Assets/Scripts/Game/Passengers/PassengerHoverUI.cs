@@ -5,15 +5,20 @@ using UnityEngine.UI;
 
 public class PassengerHoverUI : HoverUIBase<Passenger>
 {
-    [SerializeField] private TMP_Text textLabel;
-    [FormerlySerializedAs("button")] [SerializeField] private Button selectPassengerButton;
+    [SerializeField] private Image stateTintImage;
+    [SerializeField] private TMP_Text distanceAndPriceLabel, stateLabel;
+    [SerializeField] private Button selectPassengerButton;
     protected override void Populate()
     {
         bool isAtStation = Source.State == PassengerState.Station;
+        
+        stateTintImage.gameObject.SetActive(isAtStation);
+        stateLabel.text = "WAITING";
+        
         string price = isAtStation
             ? $"{Source.passengerTravelDistanceToTicketPriceCurve.Evaluate(Source.StationsLeft)} $"
             : "";
-        textLabel.text = $"({Source.StationsLeft}) {price}";
+        distanceAndPriceLabel.text = $"({Source.StationsLeft}) {price}";
         selectPassengerButton.gameObject.SetActive(isAtStation);
         selectPassengerButton.onClick.AddListener(() => Source.TrySelectForTrain());
     }
