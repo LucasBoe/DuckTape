@@ -12,7 +12,7 @@ public class StationEnvironment : MonoBehaviour, IEnvironmentAsset
     private void OnDisable() => handler.EndDriveEvent.RemoveListener(OnEndDrive);
     private void OnEndDrive()
     {
-        transform.position = new Vector3(100, 0, 0);
+        transform.position = new Vector3(50, 0, 0);
     }
     public void Refresh(float translation)
     {

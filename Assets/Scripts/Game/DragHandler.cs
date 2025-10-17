@@ -50,7 +50,14 @@ public class DragHandler : SingletonBehaviour<DragHandler>
         // Check if the ray hit something
         if (RaycastMouseForCargoSlot(out var targetSlot) && targetSlot.TryAssign(cargoInHand))
         {
-            PlayEffect(dropEffect, targetSlot);
+            if (targetSlot is CargoSell)
+            {
+                //play sell effect
+            }
+            else
+            {
+                PlayEffect(dropEffect, targetSlot);
+            }
         }
         else
         {

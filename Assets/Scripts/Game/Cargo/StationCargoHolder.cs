@@ -18,7 +18,6 @@ public class StationCargoHolder : MonoBehaviour
     {
         slotDummy.gameObject.SetActive(false);
     }
-
     private void OnEnable()
     {
         LoopEventHandler.Instance.OnStationEnterEvent.AddListener(OnStationEnter);
@@ -29,7 +28,6 @@ public class StationCargoHolder : MonoBehaviour
         LoopEventHandler.Instance.OnStationEnterEvent.RemoveListener(OnStationEnter);
         LoopEventHandler.Instance.OnStationExitEvent.RemoveListener(OnStationExit);
     }
-
     private void OnStationEnter()
     {
         //create new cargo

@@ -72,7 +72,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
 
             StatTracker.Instance.NumberOfStationsVisited++;
             
-            yield return DriveHandler.Instance.AnimateToStillIn(100f);
+            yield return DriveHandler.Instance.AnimateToStillIn(50f);
             
             status = "STATION";
             LoopEventHandler.Instance.OnStationEnterEvent?.Invoke();
