@@ -31,7 +31,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Container: {fileID: 11400000}
   assetGUID: -639796
-  prefab: {fileID: 8470376246543035952, guid: 3686487bf5e2d3d43b589f7e6b94ffd5, type: 3}
+  prefab: {fileID: -647390390845678145, guid: 3686487bf5e2d3d43b589f7e6b94ffd5, type: 3}
   length: 3.0625
   EmptyWeight: 700
 --- !u!114 &-1659991517546718722

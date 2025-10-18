@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,7 +30,27 @@ public class Passenger : HoverableMonoBehaviour
     }
     public bool TrySelectForTrain()
     {
-        State = PassengerState.Train;
-        return true;
+        if (PassengerHandler.Instance.TryEnterTrain(this))
+        {
+            State = PassengerState.Train;
+            return true;
+        }
+        return false;
+    }
+
+    public void AssignWagon(PassengerWagon wagon)
+    {
+        StartCoroutine(EnterWagonRoutine(wagon));
+    }
+
+    private IEnumerator EnterWagonRoutine(PassengerWagon wagon)
+    {
+        while (Mathf.Abs(wagon.transform.position.x - transform.position.x) > .01f)
+        {
+            var target = new Vector3(wagon.transform.position.x, transform.position.y, 0);
+            transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * 10f);
+            yield return null;
+        }
+        wagon.Enter(this);
     }
 }

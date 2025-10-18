@@ -133,11 +133,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437a7e6ca579d43d5b0de5e055ee3dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStationsToTravel: 0
-  maxStationsToTravel: 0
+  minStationsToTravel: 1
+  maxStationsToTravel: 3
   passengerTravelDistanceToTicketPriceCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 10.011837
+      outSlope: 10.011837
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.037474062
+    - serializedVersion: 3
+      time: 10
+      value: 50
+      inSlope: 2.6567385
+      outSlope: 2.6567385
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.14421494
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
