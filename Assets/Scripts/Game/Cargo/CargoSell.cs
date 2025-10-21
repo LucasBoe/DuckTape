@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Event = SS.Event;
 
 public class CargoSell : CargoSlot
 {
-    [SerializeField] public List<CargoPricePair> SellPrices;
+    [SerializeField] private SpriteRenderer backgroundImage;
+    [SerializeField] private CargoConfigContainer cargos;
+    
     public override bool TryAssign(Cargo instance)
     {
         if (!TryFetchPrice(instance.Config, out var sellPrice))
@@ -17,19 +20,22 @@ public class CargoSell : CargoSlot
         MoneyHandler.Instance.ChangeMoney(sellPrice, transform.position);
         return true;
     }
-
     private bool TryFetchPrice(CargoConfigBase config, out int price)
     {
-        foreach (var pair in SellPrices)
-        {
-            if (pair.Config == config)
-            {
-                price = pair.Price;
-                return true;
-            }
-        }
-        price = 0;
-        return false;
+        price = config.Value;
+        return true;
+    }
+    private void OnMouseEnter()
+    {
+        if (!DragHandler.Instance.IsDragging)
+            return;
+
+        bool isSellable = DragHandler.Instance.CheckIsDraggingSellable();
+        backgroundImage.color = isSellable ? Color.green : Color.red;
+    }
+    void OnMouseExit()
+    {
+        backgroundImage.color = Color.gray;
     }
 }
 

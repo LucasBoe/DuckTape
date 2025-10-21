@@ -2066,6 +2066,14 @@ MonoBehaviour:
   SellPrices:
   - Config: {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
     Price: 6
+  - Config: {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+    Price: 6
+  backgroundImage: {fileID: 1373987383}
+--- !u!212 &1373987383 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7343923479969736362, guid: ce57cb8b2ada1d145b337fd4f6486db5, type: 3}
+  m_PrefabInstance: {fileID: 1373987379}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1383869590
 GameObject:
   m_ObjectHideFlags: 0

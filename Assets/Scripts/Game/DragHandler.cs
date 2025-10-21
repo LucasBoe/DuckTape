@@ -10,6 +10,7 @@ public class DragHandler : SingletonBehaviour<DragHandler>
     [SerializeField, ReadOnly] private Cargo cargoInHand;
     [SerializeField, ReadOnly] private CargoSlot lastCargoSlot;
     [SerializeField, ReadOnly] private Transform dragRoot;
+    public bool IsDragging => cargoInHand != null;
 
     private void Update()
     {
@@ -88,5 +89,13 @@ public class DragHandler : SingletonBehaviour<DragHandler>
     private void PlayEffect(GameObject effectObject, CargoSlot targetSlot)
     {
         Instantiate(effectObject, targetSlot.transform.position, Quaternion.identity);
+    }
+
+    public bool CheckIsDraggingSellable()
+    {
+        if (!IsDragging)
+            return false;
+
+        return cargoInHand.OriginStationID < StatTracker.Instance.NumberOfStationsVisited;
     }
 }
