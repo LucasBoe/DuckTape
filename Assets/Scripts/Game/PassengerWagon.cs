@@ -13,6 +13,7 @@ public class PassengerWagon : TrainWagonBase
     
     private void OnValidate()
     {
+        passengerVisualisations.Clear();
         for (int i = 0; i < passengerContainer.childCount; i++)
         {
             var visualization = passengerContainer.GetChild(i).GetChild(0).GetComponent<SpriteRenderer>();

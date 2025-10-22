@@ -8,4 +8,5 @@ public class WagonConfigBase : ContaineableScriptableObject
     public int EmptyWeight = 1000;
     public float Length => length;
     public TrainWagonBase Prefab => prefab;
+    public int ShopPrice = 10;
 }
