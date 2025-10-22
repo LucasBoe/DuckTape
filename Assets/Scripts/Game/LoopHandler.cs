@@ -128,6 +128,9 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
         {
             var engine = DriveHandler.Instance.Engine;
             
+            if (!engine)
+                return;
+            
             //coal
             int costPerCoal = 2;
             GUI.enabled = MoneyHandler.Instance.Money >= costPerCoal;
