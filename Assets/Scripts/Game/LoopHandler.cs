@@ -47,11 +47,16 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
     {
         reachedEnd = true;
     }
-    public IEnumerator LoopRoutine()
+    private IEnumerator LoopRoutine()
     {
         Refuel();
+            
         while (true)
         {
+            status = "STATION";
+            LoopEventHandler.Instance.OnStationEnterEvent?.Invoke();
+            
+            
             driveToNextStation = false;
             while (!driveToNextStation)
                 yield return null;
@@ -73,18 +78,13 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             StatTracker.Instance.NumberOfStationsVisited++;
             
             yield return DriveHandler.Instance.AnimateToStillIn(50f);
-            
-            status = "STATION";
-            LoopEventHandler.Instance.OnStationEnterEvent?.Invoke();
-            
-            Refuel();
         }
     }
 
     private void Refuel()
     {
         DriveHandler.Instance.Engine.Coal = 8;
-        DriveHandler.Instance.Engine.Sand = 6f;
+        DriveHandler.Instance.Engine.Sand = Engine.MaxSand;
     }
 
     void OnGUI()
@@ -121,6 +121,29 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
                 {
                     DriveHandler.Instance.Break();
                 }
+            }
+        }
+
+        if (currentSectionType == LoopSection.Station)
+        {
+            var engine = DriveHandler.Instance.Engine;
+            
+            //coal
+            int costPerCoal = 2;
+            GUI.enabled = MoneyHandler.Instance.Money >= costPerCoal;
+            if (GUILayout.Button($"{costPerCoal}$ Buy Coal ({engine.Coal})"))
+            {
+                MoneyHandler.Instance.ChangeMoney(-costPerCoal);
+                engine.Coal++;
+            }
+            
+            //sand
+            int costPerSand = 2;
+            GUI.enabled = MoneyHandler.Instance.Money >= costPerSand && engine.Sand < Engine.MaxSand;
+            if (GUILayout.Button($"{costPerSand}$ Buy Sand ({engine.Sand}/{Engine.MaxSand})"))
+            {
+                MoneyHandler.Instance.ChangeMoney(-costPerSand);
+                engine.Sand++;
             }
         }
     }

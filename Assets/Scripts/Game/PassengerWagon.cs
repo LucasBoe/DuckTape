@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -25,7 +26,8 @@ public class PassengerWagon : TrainWagonBase
     }
     private void OnDisable()
     {
-        PassengerHandler.Instance.UnregisterAsActiveWagon(this);
+        if (PassengerHandler.InstanceExists)
+            PassengerHandler.Instance.UnregisterAsActiveWagon(this);
     }
     public void Enter(Passenger passenger)
     {
@@ -33,7 +35,19 @@ public class PassengerWagon : TrainWagonBase
         passenger.transform.localPosition = new Vector2(-0.1275f, -0.1275f);
         passengersEntered.Add(passenger);
         
-        //refresh visuals
+        RefreshVisuals();
+    }
+    public void Exit(Passenger passenger)
+    {
+        passengersEntered.Remove(passenger);
+        passenger.ResetParent();
+        var localPos = passenger.transform.localPosition;
+        passenger.transform.DOLocalMove(localPos - new Vector3(-100f, 0f), 10f);
+        
+        RefreshVisuals();
+    }
+    private void RefreshVisuals()
+    {
         for (int i = 0; i < passengerVisualisations.Count; i++)
         {
             passengerVisualisations[i].enabled = i < CurrentPassengerCount;

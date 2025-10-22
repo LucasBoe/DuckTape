@@ -18,10 +18,12 @@ public class Passenger : HoverableMonoBehaviour
 
     public int StationsLeft = 0;
     public PassengerState State = PassengerState.Station;
+    private Transform initalParent;
     public void Init()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         StationsLeft = Random.Range(minStationsToTravel, maxStationsToTravel);
+        initalParent = transform.parent;
     }
     public const float PASSENGER_WIDTH = 4/16f;
     private void OnDrawGizmosSelected()
@@ -42,6 +44,10 @@ public class Passenger : HoverableMonoBehaviour
     {
         StartCoroutine(EnterWagonRoutine(wagon));
     }
+    public void ResignFromWagon(PassengerWagon wagon)
+    {
+        wagon.Exit(this);
+    }
 
     private IEnumerator EnterWagonRoutine(PassengerWagon wagon)
     {
@@ -52,5 +58,10 @@ public class Passenger : HoverableMonoBehaviour
             yield return null;
         }
         wagon.Enter(this);
+    }
+
+    public void ResetParent()
+    {
+        transform.SetParent(initalParent, worldPositionStays: true);
     }
 }
