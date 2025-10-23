@@ -39,6 +39,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public float TotalDistance => currentSection == null ? 0f : currentSection.Length;
     public bool DoBreak => doBreak;
     public Engine Engine => currentEngine;
+    public Train Train => currentTrain;
     public Section CurrentSection => currentSection;
     protected override void Awake()
     {

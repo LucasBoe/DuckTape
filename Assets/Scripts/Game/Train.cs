@@ -14,9 +14,9 @@ public class Train : MonoBehaviour
     //Train Damage
     [SerializeField] private float trainHP = 2000;
     private float currentTrainHP;
-    [SerializeField] private GameObject trainHealthBar;
+    public float missingTrainHP => trainHP - currentTrainHP;
 
-    private Engine engine = DriveHandler.Instance.Engine;
+    [SerializeField] private GameObject trainHealthBar;
 
     private void Awake()
     {
@@ -24,6 +24,15 @@ public class Train : MonoBehaviour
         Damage(0);
     }
 
+    private void Start()
+    {
+        InvokeRepeating("CheckForDamage", 1, 1);
+    }
+
+    public void RepairTrain()
+    {
+
+    }
     public void AppendFromConfig(WagonConfigBase wagon)
     {
         //find new slot x
@@ -79,11 +88,21 @@ public class Train : MonoBehaviour
         }
     }
 
+    private void CheckForDamage()
+    {
+        trainHealthBar.GetComponent<SpriteRenderer>().color = Color.white;
+
+        if (DriveHandler.Instance.Speed >  ((EngineWagonConfig)DriveHandler.Instance.Engine.Config).MaxSpeed)
+            Damage(50);
+    }
+
     public void Damage(float amount)
     {
         currentTrainHP -= amount;
 
         trainHealthBar.transform.localScale = new Vector3(currentTrainHP / trainHP, 1, 1);
+
+        trainHealthBar.GetComponent<SpriteRenderer>().color = Color.red;
 
         if (currentTrainHP < 0)
             Debug.LogWarning("Train engine is destroyed.");
