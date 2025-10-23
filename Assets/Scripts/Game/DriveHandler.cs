@@ -110,7 +110,8 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
             
             currentAcceleration = Mathf.Max(Mathf.Lerp(currentAcceleration,  -.1f, Time.deltaTime * engineConfig.CoalBurnRate * highAccelerationKeeper));
             var accelerationTroughMass = currentAcceleration / (totalWeight / 1000);
-            currentSpeed += accelerationTroughMass * Time.deltaTime + currentSlope * Time.deltaTime;
+            var slopeMultiplier = GlobalBalancing.Value.SlopeAccelerationOverWeightCurve.Evaluate(totalWeight);
+            currentSpeed += accelerationTroughMass * Time.deltaTime + currentSlope * Time.deltaTime * slopeMultiplier;
 
             //drag
             currentSpeed *= (1 - Time.deltaTime / 4);

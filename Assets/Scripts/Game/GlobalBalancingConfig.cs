@@ -5,4 +5,5 @@ public class GlobalBalancingConfig : ScriptableObject
 {
     [SerializeField] public AnimationCurve ShakeOverTrainSpeedCurve;
     [SerializeField] public float RepairCostByMissingHealth;
+    [SerializeField] public AnimationCurve SlopeAccelerationOverWeightCurve;
 }
