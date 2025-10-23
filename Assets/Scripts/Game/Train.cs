@@ -8,8 +8,22 @@ public class Train : MonoBehaviour
 {
     private List<TrainWagonSlot> slots = new();
     private List<Tweener> activeShakes = new();
-    public const float WAGON_DISTANCE = 1f/16f;
-    [SerializeField] public CinemachineCamera Camera; 
+    public const float WAGON_DISTANCE = 1f / 16f;
+    [SerializeField] public CinemachineCamera Camera;
+
+    //Train Damage
+    [SerializeField] private float trainHP = 2000;
+    private float currentTrainHP;
+    [SerializeField] private GameObject trainHealthBar;
+
+    private Engine engine = DriveHandler.Instance.Engine;
+
+    private void Awake()
+    {
+        currentTrainHP = trainHP;
+        Damage(0);
+    }
+
     public void AppendFromConfig(WagonConfigBase wagon)
     {
         //find new slot x
@@ -63,5 +77,15 @@ public class Train : MonoBehaviour
             
             activeShakes.Add(slot.WagonInstance.transform.DOShakePosition(duration, Vector3.up * shakeStrengthAtCurrentSpeed, vibrato: 100, fadeOut: false));
         }
+    }
+
+    public void Damage(float amount)
+    {
+        currentTrainHP -= amount;
+
+        trainHealthBar.transform.localScale = new Vector3(currentTrainHP / trainHP, 1, 1);
+
+        if (currentTrainHP < 0)
+            Debug.LogWarning("Train engine is destroyed.");
     }
 }
