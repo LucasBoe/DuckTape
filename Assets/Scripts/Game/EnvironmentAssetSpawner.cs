@@ -21,13 +21,17 @@ public class EnvironmentAssetSpawner : MonoBehaviour, IEnvironmentAsset
     [SerializeField] private bool limitXDistance = false;
     [SerializeField] private bool limitCount = false;
     [SerializeField] private bool limitByTrainSpeed = false;
+    [SerializeField] private bool limitByProbabilityCurve = false;
 
     [SerializeField, ShowIf("limitXDistance")] private float minXDistance;
     [SerializeField, ShowIf("limitCount")] private float maxCount;
     [SerializeField, ShowIf("limitByTrainSpeed")] private float maxTrainSpeed;
+    [SerializeField, ShowIf("limitByProbabilityCurve")] private ProbabilityCurveID probabilityCurve;
+    
     
     private List<Transform> assets = new();
     private EnvironmentHandler handler;
+    private int lastProbabilityEvaluation = 0;
 
     private void OnValidate()
     {
@@ -112,6 +116,19 @@ public class EnvironmentAssetSpawner : MonoBehaviour, IEnvironmentAsset
         if (limitByTrainSpeed && DriveHandler.Instance.Speed > maxTrainSpeed)
             return;
 
+        if (limitByProbabilityCurve)
+        {
+            int currentProbabilityEvaluation = Mathf.CeilToInt(DriveHandler.Instance.Progression * DriveHandler.Instance.TotalDistance);
+            if (currentProbabilityEvaluation <= lastProbabilityEvaluation)
+                return;
+
+            lastProbabilityEvaluation = currentProbabilityEvaluation;
+            
+            float probability = DriveHandler.Instance.CurrentSection.GetProbability(probabilityCurve, DriveHandler.Instance.Progression);
+            if (Random.Range(0f, 1f) > probability)
+                return;
+        }
+
         var dummy = (Transform)(assetDummys.PickRandom());
         var spawnPos = new Vector3(EnvironmentHandler.ASSET_AREA_RADIUS, dummy.transform.position.y, 0f);
         var newAsset = Instantiate(dummy, spawnPos, Quaternion.identity);
@@ -124,4 +141,9 @@ public interface IEnvironmentAsset
 {
     public void Refresh(float translation);
     void Connect(EnvironmentHandler handler);
+}
+
+public enum ProbabilityCurveID
+{
+    Trees
 }

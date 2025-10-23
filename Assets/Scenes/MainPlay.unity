@@ -397,9 +397,11 @@ MonoBehaviour:
   limitXDistance: 1
   limitCount: 0
   limitByTrainSpeed: 0
+  limitByProbabilityCurve: 0
   minXDistance: 1
   maxCount: 0
   maxTrainSpeed: 0
+  probabilityCurveName: 
 --- !u!1 &80361844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2705,6 +2707,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71866d2e2440041b0ab999c6db86e218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DestroyEvent:
+    TargetObjs: []
+    lastInvoked: -1
   collider: {fileID: 1092333735}
   Config: {fileID: 0}
 --- !u!1 &1221735221
@@ -2745,9 +2750,11 @@ MonoBehaviour:
   limitXDistance: 1
   limitCount: 0
   limitByTrainSpeed: 0
+  limitByProbabilityCurve: 1
   minXDistance: 0.75
   maxCount: 0
   maxTrainSpeed: 0
+  probabilityCurveName: Trees
 --- !u!4 &1221735223
 Transform:
   m_ObjectHideFlags: 0

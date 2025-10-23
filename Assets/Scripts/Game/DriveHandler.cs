@@ -35,8 +35,10 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public float Speed => currentSpeed;
     public int TotalWeight => totalWeight;
     public float DistanceLeft => currentSection == null ? 0f : (1f - currentSectionProgression) * currentSection.Length;
+    public float TotalDistance => currentSection == null ? 0f : currentSection.Length;
     public bool DoBreak => doBreak;
     public Engine Engine => currentEngine;
+    public Section CurrentSection => currentSection;
     protected override void Awake()
     {
         base.Awake();
