@@ -30,6 +30,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
 
     EngineWagonConfig engineConfig => currentEngine.Config as EngineWagonConfig;
     public Event OnCurrentSectionEndReached = new Event();
+    public Event<Section> CurrentSectionChangedEvent = new Event<Section>();
     public float Acceleration => currentAcceleration;
     public float Progression => currentSectionProgression;
     public float Speed => currentSpeed;
