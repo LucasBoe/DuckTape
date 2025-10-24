@@ -14,5 +14,8 @@ public class SessionHandler : MonoBehaviour, IDelayedStartObserver
         
         DriveHandler.Instance.AssignTrainInstance(train);
         MoneyHandler.Instance.ChangeMoney(startupMoney);
+
+        var startStation = WorldMapHandler.Instance.PickStartStation();
+        StationHandler.Instance.SetStation(startStation);
     }
 }
