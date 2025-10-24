@@ -803,6 +803,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2405580695166899545, guid: a6af604a60c1b44b48cb9966d38b4771, type: 3}
+      propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6773282359903964928, guid: a6af604a60c1b44b48cb9966d38b4771, type: 3}
       propertyPath: m_Name
       value: Cart_Passenger
@@ -843,18 +847,6 @@ MonoBehaviour:
   wagonConfig: {fileID: -4167193673302700741, guid: 514d7e6ed6bb94ae39849c3fd4089397, type: 2}
   passengerContainer: {fileID: 3651778903281021494}
   passengerVisualisations:
-  - {fileID: 3695814509472557772}
-  - {fileID: 7075190495286710935}
-  - {fileID: 8734037031319368915}
-  - {fileID: 9065268482288215995}
-  - {fileID: 3695814509472557772}
-  - {fileID: 7075190495286710935}
-  - {fileID: 8734037031319368915}
-  - {fileID: 9065268482288215995}
-  - {fileID: 3695814509472557772}
-  - {fileID: 7075190495286710935}
-  - {fileID: 8734037031319368915}
-  - {fileID: 9065268482288215995}
   - {fileID: 3695814509472557772}
   - {fileID: 7075190495286710935}
   - {fileID: 8734037031319368915}
