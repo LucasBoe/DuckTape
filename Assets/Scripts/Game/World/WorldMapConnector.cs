@@ -39,4 +39,11 @@ public class WorldMapConnector : MonoBehaviour
     {
         return new Tuple<Vector2, Vector2>(Vector2.MoveTowards(a, b, .6f), Vector2.MoveTowards(b, a, .6f));
     }
+
+    public void Refresh()
+    {
+        bool isAvailable = WorldMapHandler.Instance.IsSectionConnectedTo(this, StationHandler.Instance.CurrentStation);
+        lineRenderer.startColor = isAvailable ? Color.white : Color.gray;    
+        lineRenderer.endColor = isAvailable ? Color.white : Color.gray;
+    }
 }

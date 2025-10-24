@@ -8,7 +8,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = Unity.Mathematics.Random;
 
-public class WorldMapHandler : MonoBehaviour, IDelayedStartObserver
+[SingletonSettings(SingletonLifetime.Scene, _eager: true)]
+public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStartObserver
 {
     [SerializeField] CinemachineCamera camera;
     [SerializeField, ReadOnly] bool isVisible;
@@ -27,28 +28,43 @@ public class WorldMapHandler : MonoBehaviour, IDelayedStartObserver
     private List<WorldMapNode> stations = new();
     private List<WorldMapConnector> sections = new();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         nodeDummy.gameObject.SetActive(false);
-        connectorDummy.gameObject.SetActive(false);
-    }
-
-    public void DelayedStart()
-    {
+        connectorDummy.gameObject.SetActive(false);   
         //InitializeMap
         InitializeMap();
-
+    }   
+    public void DelayedStart()
+    {
         if (test)
-            Show();
+            Invoke(nameof(Show), .1f);
     }
-
+    public WorldMapNode PickStartStation()
+    {
+        return stations.First();
+    }
     [Button]
     public void Show()
     {
         camera.enabled = true;
         isVisible = true;
+        Refresh();
     }
+    private void Refresh()
+    {
+        foreach (var station in stations)
+        {
+            station.Refresh();
+        }
 
+        foreach (var section in sections)
+        {
+            section.Refresh();
+        }
+    }
     [Button]
     public void Hide()
     {
@@ -147,7 +163,7 @@ public class WorldMapHandler : MonoBehaviour, IDelayedStartObserver
         
         camera.transform.position = new Vector3(cameraPos.x, cameraPos.y, -10f);
     }
-    private bool ConnectionExists(WorldMapNode a, WorldMapNode b)
+    public bool ConnectionExists(WorldMapNode a, WorldMapNode b)
     {
         foreach (var section in sections)
         {
@@ -157,7 +173,27 @@ public class WorldMapHandler : MonoBehaviour, IDelayedStartObserver
 
         return false;
     }
+    public bool TryGetConnection(WorldMapNode a, WorldMapNode b, out WorldMapConnector connection)
+    {
+        foreach (var section in sections)
+        {
+            if ((section.Start == a && section.End == b) || (section.Start == b && section.End == a))
+            {
+                connection = section;
+                return true;
+            }
+        }
 
+        connection = null;
+        return false;
+    }
+    public bool IsSectionConnectedTo(WorldMapConnector section, WorldMapNode node)
+    {
+        if (section.Start == node || section.End == node)
+            return true;
+        
+        return false;
+    }    
     private List<WorldMapNode> GetNeightbours(WorldMapNode station, int numberOfConnections)
     {
         List<WorldMapNode> neightbours = new();
