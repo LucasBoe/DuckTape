@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using SS;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Train : MonoBehaviour
 {
@@ -12,15 +14,16 @@ public class Train : MonoBehaviour
     [SerializeField] public CinemachineCamera Camera;
 
     //Train Damage
-    [SerializeField] private float trainHP = 2000;
+    [FormerlySerializedAs("trainHP")] [SerializeField] private float maxTrainHP = 2000;
     private float currentTrainHP;
-    public float missingTrainHP => trainHP - currentTrainHP;
+    public float missingTrainHP => maxTrainHP - currentTrainHP;
+    public Event<float> TrainDamageEvent = new();
 
     [SerializeField] private GameObject trainHealthBar;
 
     private void Awake()
     {
-        currentTrainHP = trainHP;
+        currentTrainHP = maxTrainHP;
         Damage(0);
     }
 
@@ -90,19 +93,26 @@ public class Train : MonoBehaviour
 
     private void CheckForDamage()
     {
-        trainHealthBar.GetComponent<SpriteRenderer>().color = Color.white;
+        trainHealthBar.transform.parent.gameObject.SetActive(currentTrainHP < maxTrainHP);
 
-        if (DriveHandler.Instance.Speed >  ((EngineWagonConfig)DriveHandler.Instance.Engine.Config).MaxSpeed)
-            Damage(50);
+        float currentSpeed = DriveHandler.Instance.Speed;
+        float maxSpeed = ((EngineWagonConfig)DriveHandler.Instance.Engine.Config).MaxSpeed;
+        
+        if (currentSpeed > maxSpeed)
+        {
+            Damage((currentSpeed - maxSpeed) * 10f);
+        }
+        else
+            trainHealthBar.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     public void Damage(float amount)
     {
         currentTrainHP -= amount;
-
-        trainHealthBar.transform.localScale = new Vector3(currentTrainHP / trainHP, 1, 1);
-
+        trainHealthBar.transform.localScale = new Vector3(currentTrainHP / maxTrainHP, 1, 1);
         trainHealthBar.GetComponent<SpriteRenderer>().color = Color.red;
+        
+        TrainDamageEvent?.Invoke(amount);
 
         if (currentTrainHP < 0)
             Debug.LogWarning("Train engine is destroyed.");
