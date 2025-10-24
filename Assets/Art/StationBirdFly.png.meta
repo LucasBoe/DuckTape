@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67cc943e9978dcd4c9cde3eb8f5efafa
+guid: 8edf54f396d19b94786bee626bae8446
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8353992471596775207
-    second: StationBird_0
+      213: -312649643341655274
+    second: StationBirdFly_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StationBird_0
+      name: StationBirdFly_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,14 +128,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d8cf22cb18a01c80800000000000000
-      internalID: -8353992471596775207
+      spriteID: 613d77d4ece39abf0800000000000000
+      internalID: -312649643341655274
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StationBird_1
+      name: StationBirdFly_1
       rect:
         serializedVersion: 2
         x: 5
@@ -150,52 +150,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8aaa4a06bead43147ae94cd064144143
-      internalID: 705606118
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: StationBird_2
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 0
-        width: 5
-        height: 5
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8a7547e9ac1cec6428b67ca46c00e8b4
-      internalID: 176142654
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: StationBird_3
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 0
-        width: 5
-        height: 5
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 40802669488b39d4e914ff8e2260cfea
-      internalID: -776598604
+      spriteID: 252996a799b1a9549ba7d4040f99b959
+      internalID: -397528666
       vertices: []
       indices: 
       edges: []
@@ -204,7 +160,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4301dff5c85d97b44b044fd426b6fc4d
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -214,10 +170,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      StationBird_0: -8353992471596775207
-      StationBird_1: 705606118
-      StationBird_2: 176142654
-      StationBird_3: -776598604
+      StationBirdFly_0: -312649643341655274
+      StationBirdFly_1: -397528666
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
