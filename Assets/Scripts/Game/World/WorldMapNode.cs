@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SS;
 using TMPro;
 using UnityEngine;
 
-public class WorldMapNode : MonoBehaviour
+public class WorldMapNode : MonoBehaviour, ISelectableWorldMapElement
 {
     public StationConfig Config;
     [SerializeField] private SpriteRenderer nodeRenderer;
@@ -11,6 +12,11 @@ public class WorldMapNode : MonoBehaviour
     [SerializeField] private Sprite obscuredStationSprite;
     [SerializeField] private TMP_Text text;
     [SerializeField] private SpriteRenderer currentStationPointer;
+    [SerializeField] private Collider2D collider;
+
+    private bool isVisible;
+    private bool isSelected;
+    
     public void Apply(StationConfig config)
     {
         name = config.commaSeparatedListOfNames.Split(',').PickRandom();
@@ -39,14 +45,25 @@ public class WorldMapNode : MonoBehaviour
 
     void OnMouseExit()
     {
-        text.gameObject.SetActive(false);
+        text.gameObject.SetActive(isSelected);
+    }
+    private void OnMouseDown()
+    {
+        WorldMapHandler.Instance.TrySelect(this);
     }
     public void Refresh()
     {
-        bool shouldBeVisible = StationHandler.Instance.CurrentStation == this || WorldMapHandler.Instance.ConnectionExists(StationHandler.Instance.CurrentStation, this);
+        isVisible = StationHandler.Instance.CurrentStation == this || WorldMapHandler.Instance.ConnectionExists(StationHandler.Instance.CurrentStation, this);
         
         currentStationPointer.gameObject.SetActive(StationHandler.Instance.CurrentStation == this);
-        nodeRenderer.sprite = shouldBeVisible ? RefreshSprite(Config) : obscuredStationSprite;
+        nodeRenderer.sprite = isVisible ? RefreshSprite(Config) : obscuredStationSprite;
+        text.gameObject.SetActive(isSelected);
+        collider.enabled = isVisible;
+    }
+    public void SetSelected(bool selected)
+    {
+        isSelected = selected;
+        Refresh();
     }
 }
 
