@@ -845,7 +845,7 @@ GameObject:
   - component: {fileID: 5653395697698559310}
   - component: {fileID: 8575502519403898977}
   m_Layer: 0
-  m_Name: Amount
+  m_Name: CoalAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1270,7 +1270,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -8353992471596775207, guid: 67cc943e9978dcd4c9cde3eb8f5efafa, type: 3}
   m_Color: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   m_FlipX: 0
@@ -1372,7 +1372,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -8353992471596775207, guid: 67cc943e9978dcd4c9cde3eb8f5efafa, type: 3}
   m_Color: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   m_FlipX: 0
@@ -1474,7 +1474,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -8353992471596775207, guid: 67cc943e9978dcd4c9cde3eb8f5efafa, type: 3}
   m_Color: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   m_FlipX: 0
@@ -1498,7 +1498,7 @@ GameObject:
   - component: {fileID: 1237544816805892653}
   - component: {fileID: 5360060716828365010}
   m_Layer: 0
-  m_Name: Amount
+  m_Name: SandAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2059,8 +2059,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771e820d9b6095f4f9403a458131eba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sandTmp: {fileID: 0}
-  coalTmp: {fileID: 0}
+  sandTmp: {fileID: 5360060716828365010}
+  coalTmp: {fileID: 8575502519403898977}
 --- !u!1 &9132464035273150900
 GameObject:
   m_ObjectHideFlags: 0
