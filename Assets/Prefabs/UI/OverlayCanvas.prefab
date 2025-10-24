@@ -1991,7 +1991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isVisible: 0
-  section: {fileID: 5405309646489050663, guid: 188236ddab299bf4788da4b3533a6a47, type: 2}
+  section: {fileID: 0}
   engineIconProgressionSlider: {fileID: 982117610209820248}
   iconDummy: {fileID: 2371089368074554532}
   slopeUpSprite: {fileID: 21300000, guid: 676386e8f60e645f4849b5a1fda6202a, type: 3}

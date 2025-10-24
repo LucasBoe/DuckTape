@@ -1,5 +1,86 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3875199238261302972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c09768b1872a58d4db5fc2b62c731f1d, type: 3}
+  m_Name: Uphill
+  m_EditorClassIdentifier: 
+  Container: {fileID: 11400000}
+  assetGUID: -214492
+  SlopeOverSection:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -7.724692
+      outSlope: -7.724692
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5058508
+      value: -3.9075415
+      inSlope: 6.0933857
+      outSlope: 6.0933857
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7470827
+      value: 0.895739
+      inSlope: 2.2837687
+      outSlope: 2.2837687
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.31274888
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -3.5416284
+      outSlope: -3.5416284
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TreesOverSection:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Length: 1000
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16,6 +97,8 @@ MonoBehaviour:
   OnlyAllowOneInstancePerChildType: 0
   Contained:
   - {fileID: 5405309646489050663}
+  - {fileID: -3875199238261302972}
+  - {fileID: 7394887520483617502}
 --- !u!114 &5405309646489050663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,7 +109,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c09768b1872a58d4db5fc2b62c731f1d, type: 3}
-  m_Name: Default
+  m_Name: Downhill
   m_EditorClassIdentifier: 
   Container: {fileID: 11400000}
   assetGUID: -206568
@@ -107,6 +190,96 @@ MonoBehaviour:
       value: 0
       inSlope: -9.650769
       outSlope: -9.650769
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Length: 1000
+--- !u!114 &7394887520483617502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c09768b1872a58d4db5fc2b62c731f1d, type: 3}
+  m_Name: Chaos
+  m_EditorClassIdentifier: 
+  Container: {fileID: 11400000}
+  assetGUID: -240126
+  SlopeOverSection:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.5753772
+      outSlope: 3.5753772
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.19429334
+      value: 0.694672
+      inSlope: -76.08091
+      outSlope: -76.08091
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.077218086
+    - serializedVersion: 3
+      time: 0.386899
+      value: 0.94046235
+      inSlope: -40.00606
+      outSlope: -40.00606
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.19294961
+    - serializedVersion: 3
+      time: 0.85678107
+      value: -0.9155452
+      inSlope: -48.360706
+      outSlope: -48.360706
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.13822728
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 6.392627
+      outSlope: 6.392627
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TreesOverSection:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

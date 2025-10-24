@@ -33,6 +33,11 @@ public class SectionUI : DriveUI, IDelayedStartObserver
     }
     private void OnCurrentSectionChanged(Section section)
     {
+        if (!section)
+            return;
+        
+        this.section = section;
+        
         iconDummy.transform.parent.DestroyAllChildren(iconDummy.transform);
         
         var slopes = AnimationCurveToFloatArray(section.SlopeOverSection);

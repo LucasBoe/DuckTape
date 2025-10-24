@@ -30,7 +30,6 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
         if (currentSectionType != LoopSection.Station)
            return;
         
-        DriveHandler.Instance.ModifySection(defaultSection);
         driveToNextStation = true;
     }
     public void DelayedStart()
@@ -76,6 +75,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             
             envHandler.EndDriveEvent?.Invoke();
             currentSectionType = LoopSection.Station;
+            StationHandler.Instance.EnterNextStation();
 
             StatTracker.Instance.NumberOfStationsVisited++;
             
@@ -91,12 +91,13 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
 
     void OnGUI()
     {
+        GUI.enabled = StationHandler.Instance.NextStation;
         if (GUILayout.Button("Drive To Next Station"))
         {
             GUI.enabled = currentSectionType == LoopSection.Station;
             DriveToNextStation();
         }
-
+        GUI.enabled = true;
         if (currentSectionType == LoopSection.Drive)
         {
             if (GUILayout.Button($"Shovel ({DriveHandler.Instance.Engine.Coal})"))

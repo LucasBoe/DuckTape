@@ -91,6 +91,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     public void ModifySection(Section section)
     {
         currentSection = section;
+        CurrentSectionChangedEvent?.Invoke(section);
     }
     private void Update()
     {
