@@ -34,7 +34,7 @@ public class Train : MonoBehaviour
 
     public void RepairTrain()
     {
-
+        currentTrainHP = maxTrainHP;
     }
     public void AppendFromConfig(WagonConfigBase wagon)
     {
