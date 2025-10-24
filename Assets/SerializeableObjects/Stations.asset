@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3012861455246410067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8d0976980e44ac8e5e8a8bf441f80c, type: 3}
+  m_Name: WoodExport
+  m_EditorClassIdentifier: 
+  Container: {fileID: 11400000}
+  assetGUID: -198206
+  Type: 0
+  commaSeparatedListOfNames: Alderbrook, Amberfield, Ashbourne, Baywick, Birch Hollow,
+    Blackwater, Blue Harbor, Briar Glen, Bristlecone, Brookhaven, Cedarfall, Cedar
+    Vale, Cloverford, Coldstream, Copper Cove, Cinder Ridge, Crystalford, Dawnhaven,
+    Driftwood Bay, Eaglecrest, Elmspire, Emberfield, Fableton, Fairmeadow, Fern Hollow,
+    Foxglove, Frost Harbor, Gildershire, Goldenbrook, Greenhaven, Hallowmere, Harborview,
+    Hazelwick, Hearthstead, Highgate, Hillcrest, Hollowbrook, Honeybridge, Ironwood,
+    Iverton, Juniper Ridge, Kestrel Point, Kingsvale, Lakebright, Lantern Bay, Larkspur,
+    Larkvale, Laurelspine, Lilac Grove, Linden Falls, Little Wren, Mapleford, Marshlight,
+    Meadowrun, Millstone, Mistwood, Moonhaven, Mossy Glen, Northwind, Oakfield, Oakhollow,
+    Osprey Point, Pebblebrook, Pine Harbor, Pinecrest, Redfern, Riverbend, Riverhollow,
+    Rosemead, Rowanbridge, Sable Creek, Sage Meadow, Sandbar, Seabright, Seagrass,
+    Silverpine, Silverrun, Skylark, Snowvale, Sparrow Falls, Springtide, Starling,
+    Steeplechase, Stonemere, Stormhaven, Sunfield, Sunhollow, Thimblewick, Thornberry,
+    Thistlewick, Tidewater, Timberfall, Tranquil Bay, Tumblebrook, Velvet Harbor,
+    Westering, Westmere, Whitebridge, Willowfen, Windemere
+  Takes:
+  - {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  Sells:
+  - {fileID: -4518569640895199776, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  hasPassengers: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d1563d23454b9697ca3144a5bee8b7, type: 3}
+  m_Name: Stations
+  m_EditorClassIdentifier: 
+  AllowInstancesForBaseType: 1
+  OnlyAllowOneInstancePerChildType: 0
+  Contained:
+  - {fileID: 2871875833534499827}
+  - {fileID: -3012861455246410067}
+  - {fileID: 5685666279079416853}
+  - {fileID: 3213678249001265490}
+--- !u!114 &2871875833534499827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8d0976980e44ac8e5e8a8bf441f80c, type: 3}
+  m_Name: City1
+  m_EditorClassIdentifier: 
+  Container: {fileID: 11400000}
+  assetGUID: -197794
+  Type: 2
+  commaSeparatedListOfNames: Alderbrook, Amberfield, Ashbourne, Baywick, Birch Hollow,
+    Blackwater, Blue Harbor, Briar Glen, Bristlecone, Brookhaven, Cedarfall, Cedar
+    Vale, Cloverford, Coldstream, Copper Cove, Cinder Ridge, Crystalford, Dawnhaven,
+    Driftwood Bay, Eaglecrest, Elmspire, Emberfield, Fableton, Fairmeadow, Fern Hollow,
+    Foxglove, Frost Harbor, Gildershire, Goldenbrook, Greenhaven, Hallowmere, Harborview,
+    Hazelwick, Hearthstead, Highgate, Hillcrest, Hollowbrook, Honeybridge, Ironwood,
+    Iverton, Juniper Ridge, Kestrel Point, Kingsvale, Lakebright, Lantern Bay, Larkspur,
+    Larkvale, Laurelspine, Lilac Grove, Linden Falls, Little Wren, Mapleford, Marshlight,
+    Meadowrun, Millstone, Mistwood, Moonhaven, Mossy Glen, Northwind, Oakfield, Oakhollow,
+    Osprey Point, Pebblebrook, Pine Harbor, Pinecrest, Redfern, Riverbend, Riverhollow,
+    Rosemead, Rowanbridge, Sable Creek, Sage Meadow, Sandbar, Seabright, Seagrass,
+    Silverpine, Silverrun, Skylark, Snowvale, Sparrow Falls, Springtide, Starling,
+    Steeplechase, Stonemere, Stormhaven, Sunfield, Sunhollow, Thimblewick, Thornberry,
+    Thistlewick, Tidewater, Timberfall, Tranquil Bay, Tumblebrook, Velvet Harbor,
+    Westering, Westmere, Whitebridge, Willowfen, Windemere
+  Takes:
+  - {fileID: 3475512841918060912, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: -4518569640895199776, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  Sells:
+  - {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  hasPassengers: 1
+--- !u!114 &3213678249001265490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8d0976980e44ac8e5e8a8bf441f80c, type: 3}
+  m_Name: Village
+  m_EditorClassIdentifier: 
+  Container: {fileID: 11400000}
+  assetGUID: -198978
+  Type: 1
+  commaSeparatedListOfNames: Alderbrook, Amberfield, Ashbourne, Baywick, Birch Hollow,
+    Blackwater, Blue Harbor, Briar Glen, Bristlecone, Brookhaven, Cedarfall, Cedar
+    Vale, Cloverford, Coldstream, Copper Cove, Cinder Ridge, Crystalford, Dawnhaven,
+    Driftwood Bay, Eaglecrest, Elmspire, Emberfield, Fableton, Fairmeadow, Fern Hollow,
+    Foxglove, Frost Harbor, Gildershire, Goldenbrook, Greenhaven, Hallowmere, Harborview,
+    Hazelwick, Hearthstead, Highgate, Hillcrest, Hollowbrook, Honeybridge, Ironwood,
+    Iverton, Juniper Ridge, Kestrel Point, Kingsvale, Lakebright, Lantern Bay, Larkspur,
+    Larkvale, Laurelspine, Lilac Grove, Linden Falls, Little Wren, Mapleford, Marshlight,
+    Meadowrun, Millstone, Mistwood, Moonhaven, Mossy Glen, Northwind, Oakfield, Oakhollow,
+    Osprey Point, Pebblebrook, Pine Harbor, Pinecrest, Redfern, Riverbend, Riverhollow,
+    Rosemead, Rowanbridge, Sable Creek, Sage Meadow, Sandbar, Seabright, Seagrass,
+    Silverpine, Silverrun, Skylark, Snowvale, Sparrow Falls, Springtide, Starling,
+    Steeplechase, Stonemere, Stormhaven, Sunfield, Sunhollow, Thimblewick, Thornberry,
+    Thistlewick, Tidewater, Timberfall, Tranquil Bay, Tumblebrook, Velvet Harbor,
+    Westering, Westmere, Whitebridge, Willowfen, Windemere
+  Takes:
+  - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  Sells:
+  - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  hasPassengers: 1
+--- !u!114 &5685666279079416853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8d0976980e44ac8e5e8a8bf441f80c, type: 3}
+  m_Name: OreExport
+  m_EditorClassIdentifier: 
+  Container: {fileID: 11400000}
+  assetGUID: -198526
+  Type: 0
+  commaSeparatedListOfNames: Alderbrook, Amberfield, Ashbourne, Baywick, Birch Hollow,
+    Blackwater, Blue Harbor, Briar Glen, Bristlecone, Brookhaven, Cedarfall, Cedar
+    Vale, Cloverford, Coldstream, Copper Cove, Cinder Ridge, Crystalford, Dawnhaven,
+    Driftwood Bay, Eaglecrest, Elmspire, Emberfield, Fableton, Fairmeadow, Fern Hollow,
+    Foxglove, Frost Harbor, Gildershire, Goldenbrook, Greenhaven, Hallowmere, Harborview,
+    Hazelwick, Hearthstead, Highgate, Hillcrest, Hollowbrook, Honeybridge, Ironwood,
+    Iverton, Juniper Ridge, Kestrel Point, Kingsvale, Lakebright, Lantern Bay, Larkspur,
+    Larkvale, Laurelspine, Lilac Grove, Linden Falls, Little Wren, Mapleford, Marshlight,
+    Meadowrun, Millstone, Mistwood, Moonhaven, Mossy Glen, Northwind, Oakfield, Oakhollow,
+    Osprey Point, Pebblebrook, Pine Harbor, Pinecrest, Redfern, Riverbend, Riverhollow,
+    Rosemead, Rowanbridge, Sable Creek, Sage Meadow, Sandbar, Seabright, Seagrass,
+    Silverpine, Silverrun, Skylark, Snowvale, Sparrow Falls, Springtide, Starling,
+    Steeplechase, Stonemere, Stormhaven, Sunfield, Sunhollow, Thimblewick, Thornberry,
+    Thistlewick, Tidewater, Timberfall, Tranquil Bay, Tumblebrook, Velvet Harbor,
+    Westering, Westmere, Whitebridge, Willowfen, Windemere
+  Takes:
+  - {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  Sells:
+  - {fileID: 5790063112076774038, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  hasPassengers: 0
