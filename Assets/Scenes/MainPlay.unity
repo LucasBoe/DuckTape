@@ -176,6 +176,17 @@ MonoBehaviour:
   maxCount: 0
   maxTrainSpeed: 0
   probabilityCurve: 0
+--- !u!114 &89614735 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5379998142626073785, guid: 0651c2106bae9264f822ac053fe5e70d, type: 3}
+  m_PrefabInstance: {fileID: 1351989904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 771e820d9b6095f4f9403a458131eba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &120619371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1040,7 +1051,7 @@ PrefabInstance:
     - target: {fileID: 1003223817195209845, guid: c24d8d34bd356ee4eab6179c043d45a5, type: 3}
       propertyPath: maintenanceHandler
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 89614735}
     - target: {fileID: 1108655329967638171, guid: c24d8d34bd356ee4eab6179c043d45a5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
