@@ -4,6 +4,7 @@ using System.Linq;
 using NaughtyAttributes;
 using SS;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = Unity.Mathematics.Random;
@@ -27,7 +28,10 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
 
     private List<WorldMapNode> stations = new();
     private List<WorldMapConnector> sections = new();
-
+    
+    private WorldMapNode selectedNode;
+    private WorldMapConnector selectedConnector;
+    public bool IsVisible => isVisible;
     protected override void Awake()
     {
         base.Awake();
@@ -133,6 +137,7 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
 
 
                 var instance = Instantiate(connectorDummy, connectorDummy.transform.parent);
+                instance.Init(sectionPool.All.PickRandom());
                 instance.Connect(station, neightbour);
                 instance.gameObject.SetActive(true);
                 sections.Add(instance);
@@ -204,4 +209,40 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
 
         return neightbours;
     }
+    public void TrySelect(WorldMapNode node)
+    {
+        if (TryGetConnection(StationHandler.Instance.CurrentStation, node, out WorldMapConnector connector))
+        {
+            TrySelect(connector, node);
+        }
+    }
+    public void TrySelect(WorldMapConnector connector)
+    {
+        var node = connector.Start == StationHandler.Instance.CurrentStation ? connector.End : connector.Start;
+        TrySelect(connector, node);
+    }    
+    private void TrySelect(WorldMapConnector connector, WorldMapNode node)
+    {
+        if (DriveHandler.Instance.Progression > 0f)
+            return;
+        
+        if (selectedNode)
+            selectedNode.SetSelected(false);
+
+        if (selectedConnector)
+            selectedConnector.SetSelected(false);
+        
+        selectedNode = node;
+        selectedConnector = connector;
+
+        DriveHandler.Instance.ModifySection(selectedConnector.Section);
+        StationHandler.Instance.ModifyTargetStation(selectedNode);
+        selectedNode.SetSelected(true);
+        selectedConnector.SetSelected(true);
+    }
+}
+
+public interface ISelectableWorldMapElement
+{
+    void SetSelected(bool selected);
 }

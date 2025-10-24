@@ -202,7 +202,7 @@ Transform:
   m_GameObject: {fileID: 1623815936779027199}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -228,7 +228,7 @@ MonoBehaviour:
   connectorDummy: {fileID: 4765901332597135939}
   sectionPool: {fileID: 11400000, guid: 188236ddab299bf4788da4b3533a6a47, type: 2}
   stationPool: {fileID: 11400000, guid: 7c45bedd51c632a4eb491e5de378b122, type: 2}
-  test: 1
+  test: 0
 --- !u!1 &2187870180242769563
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 4243563814140046196}
   - component: {fileID: 4765901332597135939}
   - component: {fileID: 5164126117542045085}
+  - component: {fileID: 6213391512766240803}
   m_Layer: 0
   m_Name: DummyConnector
   m_TagString: Untagged
@@ -277,9 +278,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Start: {fileID: 0}
   End: {fileID: 0}
+  Section: {fileID: 0}
   Distance: 0
   lineRenderer: {fileID: 5164126117542045085}
   distanceLabelText: {fileID: 8957349715011157844}
+  collider: {fileID: 6213391512766240803}
+  isSelected: 0
 --- !u!120 &5164126117542045085
 LineRenderer:
   serializedVersion: 2
@@ -387,6 +391,52 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!61 &6213391512766240803
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187870180242769563}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 0.1}
+  m_EdgeRadius: 0
 --- !u!1 &3925064247217068569
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +868,7 @@ MonoBehaviour:
   obscuredStationSprite: {fileID: -1985574786, guid: 2284c3788bbef7a4d832457608eaa805, type: 3}
   text: {fileID: 8877075531915046721}
   currentStationPointer: {fileID: 8046541606308611779}
+  collider: {fileID: 4261584620012271666}
 --- !u!212 &4117394582247795068
 SpriteRenderer:
   m_ObjectHideFlags: 0
