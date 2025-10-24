@@ -4,7 +4,7 @@ using SS;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SectionUI : MonoBehaviour, IDelayedStartObserver
+public class SectionUI : DriveUI, IDelayedStartObserver
 {
     public Section section;
     [SerializeField] private Slider engineIconProgressionSlider;
@@ -15,13 +15,15 @@ public class SectionUI : MonoBehaviour, IDelayedStartObserver
     {
         iconDummy.gameObject.SetActive(false);
     }
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         DriveHandler.Instance.CurrentSectionChangedEvent.AddListener(OnCurrentSectionChanged);
     }
-
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+        
         if (DriveHandler.InstanceExists)
             DriveHandler.Instance.CurrentSectionChangedEvent.RemoveListener(OnCurrentSectionChanged);
     }
@@ -29,7 +31,6 @@ public class SectionUI : MonoBehaviour, IDelayedStartObserver
     {
         OnCurrentSectionChanged(section);
     }
-
     private void OnCurrentSectionChanged(Section section)
     {
         iconDummy.transform.parent.DestroyAllChildren(iconDummy.transform);

@@ -55,6 +55,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
         {
             status = "STATION";
             LoopEventHandler.Instance.OnStationEnterEvent?.Invoke();
+            LoopEventHandler.Instance.LoopSectionSwitchedEvent?.Invoke(LoopSection.Station);
             
             
             driveToNextStation = false;
@@ -67,6 +68,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             status = "DRIVE";
             DriveHandler.Instance.Unbreak();
             LoopEventHandler.Instance.OnStationExitEvent?.Invoke();
+            LoopEventHandler.Instance.LoopSectionSwitchedEvent?.Invoke(LoopSection.Drive);
 
             reachedEnd = false;
             while (!reachedEnd)
@@ -156,4 +158,5 @@ public class LoopEventHandler : Singleton<LoopEventHandler>
 {
     public Event OnStationEnterEvent = new();
     public Event OnStationExitEvent = new();
+    public Event<LoopSection> LoopSectionSwitchedEvent = new();
 }

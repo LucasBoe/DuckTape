@@ -5,21 +5,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StationUI : MonoBehaviour
+public abstract class SectionSpecficUI : MonoBehaviour
 {
     [SerializeField, ReadOnly] private bool isVisible;
-    private void OnEnable()
+    protected abstract LoopSection GetAssociatedSection();
+    protected virtual void OnEnable()
     {
-        LoopEventHandler.Instance.OnStationEnterEvent.AddListener(OnStationEnter);
-        LoopEventHandler.Instance.OnStationExitEvent.AddListener(OnStationExit);
+        LoopEventHandler.Instance.LoopSectionSwitchedEvent.AddListener(OnLoopSectionSwitched);
     }
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
-        LoopEventHandler.Instance.OnStationEnterEvent.RemoveListener(OnStationEnter);
-        LoopEventHandler.Instance.OnStationExitEvent.RemoveListener(OnStationExit);
+        LoopEventHandler.Instance.LoopSectionSwitchedEvent.RemoveListener(OnLoopSectionSwitched);
     }
-    private void OnStationEnter() => TryShow();
-    private void OnStationExit() => TryHide();
+    private void OnLoopSectionSwitched(global::LoopSection section)
+    {
+        if (section == GetAssociatedSection())
+            TryShow();
+        else
+            TryHide();
+    }
     private void TryShow()
     {
         isVisible = true;
@@ -30,6 +34,14 @@ public class StationUI : MonoBehaviour
         isVisible = false;
         transform.DOScaleY(0f, .3f).SetEase(Ease.InSine);
     }
+}
+public class StationUI : SectionSpecficUI
+{
+    protected override LoopSection GetAssociatedSection() => LoopSection.Station;
+}
+public class DriveUI : SectionSpecficUI
+{
+    protected override LoopSection GetAssociatedSection() => LoopSection.Drive;
 }
 public class CargoSellUI : StationUI
 {
