@@ -85,8 +85,8 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
 
     private void Refuel()
     {
-        DriveHandler.Instance.Engine.Coal = 8;
-        DriveHandler.Instance.Engine.Sand = Engine.MaxSand;
+        DriveHandler.Instance.Engine.Coal = DriveHandler.Instance.Engine.EngineConfig.MaxCoalStorage;
+        DriveHandler.Instance.Engine.Sand = DriveHandler.Instance.Engine.EngineConfig.MaxSandStorage;
     }
 
     void OnGUI()
@@ -123,32 +123,6 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
                 {
                     DriveHandler.Instance.Break();
                 }
-            }
-        }
-
-        if (currentSectionType == LoopSection.Station)
-        {
-            var engine = DriveHandler.Instance.Engine;
-            
-            if (!engine)
-                return;
-            
-            //coal
-            int costPerCoal = 2;
-            GUI.enabled = MoneyHandler.Instance.Money >= costPerCoal;
-            if (GUILayout.Button($"{costPerCoal}$ Buy Coal ({engine.Coal})"))
-            {
-                MoneyHandler.Instance.ChangeMoney(-costPerCoal);
-                engine.Coal++;
-            }
-            
-            //sand
-            int costPerSand = 2;
-            GUI.enabled = MoneyHandler.Instance.Money >= costPerSand && engine.Sand < Engine.MaxSand;
-            if (GUILayout.Button($"{costPerSand}$ Buy Sand ({engine.Sand}/{Engine.MaxSand})"))
-            {
-                MoneyHandler.Instance.ChangeMoney(-costPerSand);
-                engine.Sand++;
             }
         }
     }

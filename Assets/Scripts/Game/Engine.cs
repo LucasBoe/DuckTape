@@ -6,7 +6,8 @@ public class Engine : TrainWagonBase
 {
     public int Coal;
     public float Sand;
-    public const float MaxSand = 6f;
+
+    public EngineWagonConfig EngineConfig => Config as EngineWagonConfig;
 
     [SerializeField] private ParticleSystem p_Sys;
 
@@ -21,5 +22,7 @@ public class Engine : TrainWagonBase
         force.x = new ParticleSystem.MinMaxCurve(-DriveHandler.Instance.Speed);
         p_Sys.startRotation = Mathf.Deg2Rad * (90f * UnityEngine.Random.Range(0, 4));
     }
+
+
 
 }
