@@ -1,10 +1,12 @@
 using UnityEngine;
 using TMPro;
 using NaughtyAttributes;
+using UnityEngine.UI;
 
 public class MaintenanceUI : StationUI
 {
     [SerializeField] private TextMeshProUGUI repairCostTmp;
+    [SerializeField] private Button repairButton;
     [SerializeField, ReadOnly] private int repairCost;
 
     private void OnEnable()
@@ -20,7 +22,17 @@ public class MaintenanceUI : StationUI
     void UpdateUI()
     {
         repairCost = (int) (DriveHandler.Instance.Train.missingTrainHP * GlobalBalancing.Value.RepairCostByMissingHealth);
-        repairCostTmp.text = "Repair: (" + repairCost + "$)";
+
+        if (repairCost == 0)
+        {
+            repairCostTmp.text = "No repair needed";
+            repairButton.interactable = false;
+        }
+        else
+        {
+            repairCostTmp.text = "Repair: (" + repairCost + "$)";
+            repairButton.interactable = true;
+        }
     }
     public void TryRepairTrain()
     {
