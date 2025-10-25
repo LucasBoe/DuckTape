@@ -55,6 +55,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             status = "STATION";
             LoopEventHandler.Instance.OnStationEnterEvent?.Invoke();
             LoopEventHandler.Instance.LoopSectionSwitchedEvent?.Invoke(LoopSection.Station);
+            GamePhaseHandler.Instance.SetGamePhase(GamePhase.InStation);
             
             
             driveToNextStation = false;
@@ -63,6 +64,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             
             envHandler.BeginDriveEvent?.Invoke();
             currentSectionType = LoopSection.Drive;
+            GamePhaseHandler.Instance.SetGamePhase(GamePhase.Driving);
             
             status = "DRIVE";
             DriveHandler.Instance.Unbreak();
@@ -75,6 +77,7 @@ public class LoopHandler : MonoBehaviour, IDelayedStartObserver
             
             envHandler.EndDriveEvent?.Invoke();
             currentSectionType = LoopSection.Station;
+            GamePhaseHandler.Instance.SetGamePhase(GamePhase.EnteringStation);
             StationHandler.Instance.EnterNextStation();
 
             StatTracker.Instance.NumberOfStationsVisited++;

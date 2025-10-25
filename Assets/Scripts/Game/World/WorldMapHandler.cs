@@ -55,6 +55,7 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
     {
         camera.enabled = true;
         isVisible = true;
+        GamePhaseHandler.Instance.AddGamePhaseOverride(GamePhase.Map);
         Refresh();
     }
     private void Refresh()
@@ -74,6 +75,7 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
     {
         camera.enabled = false;
         isVisible = false;
+        GamePhaseHandler.Instance.RemoveGamePhaseOverride(GamePhase.Map);
     }
 
     private void InitializeMap()

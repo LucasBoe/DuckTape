@@ -5,45 +5,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class SectionSpecficUI : MonoBehaviour
+public abstract class SectionSpecficUI : GamePhaseUI
 {
-    [SerializeField, ReadOnly] private bool isVisible;
-    protected abstract LoopSection GetAssociatedSection();
-    protected virtual void OnEnable()
+    protected override void SetVisible(bool visible)
     {
-        LoopEventHandler.Instance.LoopSectionSwitchedEvent.AddListener(OnLoopSectionSwitched);
-    }
-    protected virtual void OnDisable()
-    {
-        LoopEventHandler.Instance.LoopSectionSwitchedEvent.RemoveListener(OnLoopSectionSwitched);
-    }
-    private void OnLoopSectionSwitched(global::LoopSection section)
-    {
-        if (section == GetAssociatedSection())
+        if (visible)
             TryShow();
         else
             TryHide();
     }
     private void TryShow()
     {
-        isVisible = true;
         transform.DOScaleY(1f, .3f).SetEase(Ease.OutBack);
     }
     private void TryHide()
     {
-        isVisible = false;
         transform.DOScaleY(0f, .3f).SetEase(Ease.InSine);
     }
 }
-public class StationUI : SectionSpecficUI
-{
-    protected override LoopSection GetAssociatedSection() => LoopSection.Station;
-}
-public class DriveUI : SectionSpecficUI
-{
-    protected override LoopSection GetAssociatedSection() => LoopSection.Drive;
-}
-public class CargoSellUI : StationUI
+public class CargoSellUI : SectionSpecficUI
 {
     [SerializeField] private CargoConfigContainer cargos;
     [SerializeField] private GameObject dummyObject;

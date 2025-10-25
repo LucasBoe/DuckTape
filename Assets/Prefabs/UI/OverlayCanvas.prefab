@@ -1990,7 +1990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b1e7f5e91b34a67aefd8df12dc3bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVisible: 0
+  associatedPhases: 1
+  isVisible: 1
   section: {fileID: 0}
   engineIconProgressionSlider: {fileID: 982117610209820248}
   iconDummy: {fileID: 2371089368074554532}
@@ -2047,7 +2048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae3e850832f0a04ba90939e64ea60cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVisible: 0
+  associatedPhases: 4
+  isVisible: 1
   repairButton: {fileID: 5117789967289336143}
   coalButton: {fileID: 8801970923262150352}
   sandButton: {fileID: 8953634412550946271}
@@ -3826,7 +3828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a015fe2e44c486fa5b5affde70acaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVisible: 0
+  associatedPhases: 4
+  isVisible: 1
   cargos: {fileID: 11400000, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   dummyObject: {fileID: 6077341764279559379}
 --- !u!1 &9039756117911529674

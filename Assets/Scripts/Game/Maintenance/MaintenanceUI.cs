@@ -3,7 +3,7 @@ using TMPro;
 using NaughtyAttributes;
 using UnityEngine.UI;
 
-public class MaintenanceUI : StationUI
+public class MaintenanceUI : SectionSpecficUI
 {
     [SerializeField] private Button repairButton, coalButton, sandButton;
     private TextMeshProUGUI repairCostTmp, coalCostTmp, sandCostTmp;
@@ -21,30 +21,19 @@ public class MaintenanceUI : StationUI
         sandCostTmp = sandButton.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         LoopEventHandler.Instance.OnStationEnterEvent.AddListener(OnStationEnter);
-        LoopEventHandler.Instance.OnStationExitEvent.AddListener(OnStationExit);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         LoopEventHandler.Instance.OnStationEnterEvent.RemoveListener(OnStationEnter);
-        LoopEventHandler.Instance.OnStationExitEvent.RemoveListener(OnStationExit);
     }
-
-    private void OnStationExit()
-    {
-        coalButton.gameObject.SetActive(false);
-        sandButton.gameObject.SetActive(false);
-        repairButton.gameObject.SetActive(false);
-    }
-
     private void OnStationEnter()
     {
-        coalButton.gameObject.SetActive(true);
-        sandButton.gameObject.SetActive(true);
-
         UpdateUI();
     }
 

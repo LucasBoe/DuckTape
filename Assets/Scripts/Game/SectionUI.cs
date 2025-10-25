@@ -4,7 +4,7 @@ using SS;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SectionUI : DriveUI, IDelayedStartObserver
+public class SectionUI : SectionSpecficUI, IDelayedStartObserver
 {
     public Section section;
     [SerializeField] private Slider engineIconProgressionSlider;
