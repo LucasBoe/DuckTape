@@ -54,10 +54,12 @@ MonoBehaviour:
   length: 4.94
   EmptyWeight: 600
   ShopPrice: 10
-  MaxSpeed: 30
+  MaxSpeed: 24
+  MaxCoalStorage: 10
   CoalBurnRate: 0.04
   MaxAccelleration: 10
   BreakPower: 2
+  MaxSandStorage: 10
   SandConsumption: 1
 --- !u!114 &11400000
 MonoBehaviour:

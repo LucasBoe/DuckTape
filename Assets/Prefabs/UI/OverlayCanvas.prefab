@@ -2698,6 +2698,7 @@ GameObject:
   - component: {fileID: 9205825190081725660}
   - component: {fileID: 4713423661620805562}
   - component: {fileID: 49223576765401272}
+  - component: {fileID: 3623235341983926460}
   m_Layer: 0
   m_Name: SteamGauge
   m_TagString: Untagged
@@ -2752,7 +2753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2768,6 +2769,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3623235341983926460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2542197612342829207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4778680b888fdf7479877cc1ea2fa0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  associatedPhases: 1
+  isVisible: 1
+  indicator: {fileID: 2407017611522491807}
 --- !u!1 &3007215853295444295
 GameObject:
   m_ObjectHideFlags: 0
@@ -6020,6 +6036,7 @@ GameObject:
   - component: {fileID: 595063481695901824}
   - component: {fileID: 3888437639995543349}
   - component: {fileID: 2257176946292821899}
+  - component: {fileID: 1074366039930849805}
   m_Layer: 0
   m_Name: SpeedGauge
   m_TagString: Untagged
@@ -6090,6 +6107,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1074366039930849805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7504416641608543688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdb25306b4d08f408bcaa8d7d5bddf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  associatedPhases: 1
+  isVisible: 1
+  indicator: {fileID: 3837902624822933870}
 --- !u!1 &7637547158362182705
 GameObject:
   m_ObjectHideFlags: 0
@@ -6642,7 +6674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8127642632136361981
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6693,7 +6725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
