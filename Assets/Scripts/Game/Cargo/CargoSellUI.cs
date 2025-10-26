@@ -31,6 +31,36 @@ public class CargoSellUI : SectionSpecficUI
     {
         dummyObject.SetActive(false);
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        StationHandler.Instance.EnterStationEvent.AddListener(OnEnterStation);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        StationHandler.Instance.EnterStationEvent.RemoveListener(OnEnterStation);
+    }
+    private void OnEnterStation(WorldMapNode obj)
+    {
+        for (int i = 0; i < dummyObject.transform.parent.childCount; i++)
+        {
+            var child = dummyObject.transform.parent.GetChild(i);
+            child.gameObject.SetActive(IsValid(child.GetComponentInChildren<Image>().sprite, obj));
+        }
+    }
+    private bool IsValid(Sprite sprite, WorldMapNode node)
+    {
+        foreach (var take in node.Config.Takes)
+        {
+            if (take.Sprite == sprite)
+                return true;
+        }
+        
+        return false;
+    }
     private void Start()
     {
         foreach (var cargo in cargos.All)
