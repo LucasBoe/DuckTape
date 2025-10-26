@@ -13,9 +13,16 @@ public class WorldMapConnector : MonoBehaviour, ISelectableWorldMapElement
 
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private TMP_Text distanceLabelText;
+    [SerializeField] private SpriteRenderer iconDummy;
     [SerializeField] private BoxCollider2D collider;
 
-    [SerializeField, ReadOnly] private bool isSelected;  
+    [SerializeField, ReadOnly] private bool isSelected;
+
+    private void Awake()
+    {
+        iconDummy.gameObject.SetActive(false);
+    }
+
     public void Init(Section sectionConfig)
     {
         Section = sectionConfig;
@@ -67,5 +74,18 @@ public class WorldMapConnector : MonoBehaviour, ISelectableWorldMapElement
     {
         isSelected = selected;
         lineRenderer.widthMultiplier = isSelected ? .3f : .1f;
+        iconDummy.transform.parent.DestroyAllChildren(iconDummy.transform);
+        if (selected)
+        {
+            foreach (var icon in Section.GetIcons())
+            {
+                var instance = Instantiate(iconDummy, iconDummy.transform.parent);
+                instance.sprite = icon.Item1;
+                float l = icon.Item2;
+                float r = Distance / 2f - .6f;
+                instance.transform.localPosition = new Vector3(Mathf.Lerp(-r, r, l),0,0);
+                instance.gameObject.SetActive(true);
+            }
+        }
     }
 }
