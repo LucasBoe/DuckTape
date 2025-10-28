@@ -46,7 +46,7 @@ public class GamePhaseHandler : Singleton<GamePhaseHandler>
     }
     public void AddGamePhaseOverride(GamePhase phase)
     {
-        var before = currentPhase;
+        var before = CurrentPhase;
         phaseOverrides.Add(phase);
         
         if (before != CurrentPhase)
@@ -54,7 +54,7 @@ public class GamePhaseHandler : Singleton<GamePhaseHandler>
     }
     public void RemoveGamePhaseOverride(GamePhase phase)
     {
-        var before = currentPhase;
+        var before = CurrentPhase;
         phaseOverrides.Remove(phase);
         
         if (before != CurrentPhase)
