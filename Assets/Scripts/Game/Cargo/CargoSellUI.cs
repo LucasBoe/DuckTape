@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
@@ -27,6 +28,8 @@ public class CargoSellUI : SectionSpecficUI
 {
     [SerializeField] private CargoConfigContainer cargos;
     [SerializeField] private GameObject dummyObject;
+    
+    List<SellUIElement> elements = new();
     private void Awake()
     {
         dummyObject.SetActive(false);
@@ -45,21 +48,8 @@ public class CargoSellUI : SectionSpecficUI
     }
     private void OnEnterStation(WorldMapNode obj)
     {
-        for (int i = 0; i < dummyObject.transform.parent.childCount; i++)
-        {
-            var child = dummyObject.transform.parent.GetChild(i);
-            child.gameObject.SetActive(IsValid(child.GetComponentInChildren<Image>().sprite, obj));
-        }
-    }
-    private bool IsValid(Sprite sprite, WorldMapNode node)
-    {
-        foreach (var take in node.Config.Takes)
-        {
-            if (take.Sprite == sprite)
-                return true;
-        }
-        
-        return false;
+        foreach (var element in elements)
+            element.Instance.SetActive(obj.Config.Takes.Contains(element.Cargo));
     }
     private void Start()
     {
@@ -73,6 +63,21 @@ public class CargoSellUI : SectionSpecficUI
             text.text = $"{cargo.Value}$";
             
             instance.SetActive(true);
+            elements.Add(new SellUIElement()
+            {
+                Image = image,
+                Text = text,
+                Cargo = cargo,
+                Instance = instance
+            });
         }
+    }
+    
+    public class SellUIElement
+    {
+        public CargoConfigBase Cargo;
+        public GameObject Instance;
+        public Image Image;
+        public TMP_Text Text;
     }
 }

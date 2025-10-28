@@ -11,7 +11,7 @@ public class DragHandler : SingletonBehaviour<DragHandler>
     [SerializeField, ReadOnly] private CargoSlot lastCargoSlot;
     [SerializeField, ReadOnly] private Transform dragRoot;
     public bool IsDragging => cargoInHand != null;
-
+    public CargoConfigBase CurrentCargo => cargoInHand?.Config;
     private void Update()
     {
         if(Input.GetMouseButtonUp(0) && cargoInHand)

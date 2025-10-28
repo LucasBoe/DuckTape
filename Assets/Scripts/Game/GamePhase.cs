@@ -70,7 +70,7 @@ public class GamePhaseHandler : Singleton<GamePhaseHandler>
 public abstract class GamePhaseUI : MonoBehaviour
 {
     [SerializeField, EnumFlags] protected GamePhase associatedPhases;
-    [ShowNativeProperty] protected GamePhase currentPhase => GamePhaseHandler.InstanceExists ? GamePhaseHandler.Instance.CurrentPhase : GamePhase.None;
+    [ShowNativeProperty] protected GamePhase currentPhase => Application.isPlaying && GamePhaseHandler.InstanceExists ? GamePhaseHandler.Instance.CurrentPhase : GamePhase.None;
     [SerializeField, ReadOnly] protected bool isVisible = true;
     protected virtual void OnEnable()
     {

@@ -12,6 +12,8 @@ public class StationCargoHolder : MonoBehaviour
     [SerializeField, BoxGroup("Balancing")] private Vector2Int minMaxCargoCount;
     [SerializeField, BoxGroup("Balancing")] private float cargoSlotxOffset;
     
+    [SerializeField, ReadOnly] StationConfig currentStationConfig;
+    
     private List<CargoSlot> createdSlots = new();
 
     private void Awake()
@@ -20,16 +22,18 @@ public class StationCargoHolder : MonoBehaviour
     }
     private void OnEnable()
     {
-        LoopEventHandler.Instance.OnStationEnterEvent.AddListener(OnStationEnter);
+        StationHandler.Instance.EnterStationEvent.AddListener(OnStationEnter);
         LoopEventHandler.Instance.OnStationExitEvent.AddListener(OnStationExit);
     }
     private void OnDisable()
     {
-        LoopEventHandler.Instance.OnStationEnterEvent.RemoveListener(OnStationEnter);
+        StationHandler.Instance.EnterStationEvent.RemoveListener(OnStationEnter);
         LoopEventHandler.Instance.OnStationExitEvent.RemoveListener(OnStationExit);
     }
-    private void OnStationEnter()
+    private void OnStationEnter(WorldMapNode stationNode)
     {
+        currentStationConfig = stationNode.Config;
+        
         //create new cargo
         int maxCargo = Random.Range(minMaxCargoCount.x, minMaxCargoCount.y);
         for (int i = 0; i < maxCargo; i++)
@@ -37,7 +41,7 @@ public class StationCargoHolder : MonoBehaviour
             var newSlotInstance = Instantiate(slotDummy, slotDummy.transform.parent);
             newSlotInstance.gameObject.SetActive(true);
             newSlotInstance.transform.Translate(i * cargoSlotxOffset, 0f,0f);
-            newSlotInstance.AssignFromConfig(cargos.All.PickRandom());
+            newSlotInstance.AssignFromConfig(currentStationConfig.Sells.PickRandom());
             createdSlots.Add(newSlotInstance);
         }
     }

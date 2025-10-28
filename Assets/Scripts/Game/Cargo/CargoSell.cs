@@ -16,6 +16,9 @@ public class CargoSell : CargoSlot
         if (instance.OriginStationID == StatTracker.Instance.NumberOfStationsVisited)
             return false;
         
+        if (!CanSellAtCurrentStation(instance.Config))
+            return false;
+        
         Destroy(instance.gameObject);
         MoneyHandler.Instance.ChangeMoney(sellPrice, transform.position);
         return true;
@@ -31,7 +34,11 @@ public class CargoSell : CargoSlot
             return;
 
         bool isSellable = DragHandler.Instance.CheckIsDraggingSellable();
-        backgroundImage.color = isSellable ? Color.green : Color.red;
+        backgroundImage.color = isSellable && CanSellAtCurrentStation(DragHandler.Instance.CurrentCargo) ? Color.green : Color.red;
+    }
+    private bool CanSellAtCurrentStation(CargoConfigBase cargo)
+    {
+        return StationHandler.Instance.CurrentStation.Config.Takes.Contains(cargo);
     }
     void OnMouseExit()
     {
