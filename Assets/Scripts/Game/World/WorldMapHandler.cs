@@ -14,6 +14,7 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
 {
     [SerializeField] CinemachineCamera camera;
     [SerializeField, ReadOnly] bool isVisible;
+    [SerializeField] WorldMapStationInfoBox infoBox;
 
     [SerializeField] private WorldMapNode nodeDummy;
     [SerializeField] private WorldMapConnector connectorDummy;
@@ -227,9 +228,12 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
     {
         if (DriveHandler.Instance.Progression > 0f)
             return;
-        
+
         if (selectedNode)
+        {
             selectedNode.SetSelected(false);
+            infoBox.Hide();
+        }
 
         if (selectedConnector)
             selectedConnector.SetSelected(false);
@@ -240,6 +244,7 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
         DriveHandler.Instance.ModifySection(selectedConnector.Section);
         StationHandler.Instance.ModifyTargetStation(selectedNode);
         selectedNode.SetSelected(true);
+        infoBox.Show(selectedNode);
         selectedConnector.SetSelected(true);
     }
 }
