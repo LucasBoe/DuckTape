@@ -67,8 +67,6 @@ public class Section : ContaineableScriptableObject
             }
         }
         
-        Debug.Log($"closest: {lastX}, {lastY}");
-        
         return new Tuple<float, float>(lastX / 100f, lastY);
 
         float Distance(float x, float y)
