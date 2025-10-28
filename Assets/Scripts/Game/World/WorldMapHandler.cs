@@ -241,7 +241,7 @@ public class WorldMapHandler : SingletonBehaviour<WorldMapHandler>, IDelayedStar
         selectedNode = node;
         selectedConnector = connector;
 
-        DriveHandler.Instance.ModifySection(selectedConnector.Section);
+        DriveHandler.Instance.ModifySection(selectedConnector);
         StationHandler.Instance.ModifyTargetStation(selectedNode);
         selectedNode.SetSelected(true);
         infoBox.Show(selectedNode);

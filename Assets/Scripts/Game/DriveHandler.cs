@@ -19,7 +19,7 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     [SerializeField, ReadOnly] private float currentSlope;
     [SerializeField, ReadOnly] private bool doBreak;
 
-    [SerializeField, ReadOnly] private Section currentSection;
+    [SerializeField, ReadOnly] private WorldMapConnector currentSection;
     [SerializeField, ReadOnly] private float currentSectionProgression;
     
     [SerializeField, ReadOnly] private bool isInStation = false;
@@ -30,17 +30,17 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
 
     EngineWagonConfig engineConfig => currentEngine.Config as EngineWagonConfig;
     public Event OnCurrentSectionEndReached = new Event();
-    public Event<Section> CurrentSectionChangedEvent = new Event<Section>();
+    public Event<WorldMapConnector> CurrentSectionChangedEvent = new();
     public float Acceleration => currentAcceleration;
     public float Progression => currentSectionProgression;
     public float Speed => currentSpeed;
     public int TotalWeight => totalWeight;
-    public float DistanceLeft => currentSection == null ? 0f : (1f - currentSectionProgression) * currentSection.Length;
-    public float TotalDistance => currentSection == null ? 0f : currentSection.Length;
+    [ShowNativeProperty] public float DistanceLeft => currentSection == null ? 0f : (1f - currentSectionProgression) * (currentSection.Distance * 100f);
+    [ShowNativeProperty] public float TotalDistance => currentSection == null ? 0f : (currentSection.Distance * 100f);
     public bool DoBreak => doBreak;
     public Engine Engine => currentEngine;
     public Train Train => currentTrain;
-    public Section CurrentSection => currentSection;
+    public WorldMapConnector CurrentSection => currentSection;
     protected override void Awake()
     {
         base.Awake();
@@ -88,10 +88,10 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
     {
         currentEngine = engine;
     }    
-    public void ModifySection(Section section)
+    public void ModifySection(WorldMapConnector connector)
     {
-        currentSection = section;
-        CurrentSectionChangedEvent?.Invoke(section);
+        currentSection = connector;
+        CurrentSectionChangedEvent?.Invoke(connector);
     }
     private void Update()
     {
@@ -129,9 +129,11 @@ public class DriveHandler : SingletonBehaviour<DriveHandler>
             
             if (currentSection == null)
                 return;
+
+            float distance = currentSection.Distance * 100f;
             
-            currentSectionProgression += currentSpeed / currentSection.Length * Time.deltaTime;
-            currentSlope = currentSection.SlopeOverSection.Evaluate(currentSectionProgression);
+            currentSectionProgression += (currentSpeed / distance) * Time.deltaTime;
+            currentSlope = currentSection.Section.SlopeOverSection.Evaluate(currentSectionProgression);
             currentTrain.Camera.transform.rotation = Quaternion.Euler(0, 0, currentSlope);
             
             if (currentSectionProgression >= 1f)

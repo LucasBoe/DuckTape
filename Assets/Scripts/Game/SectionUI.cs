@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SectionUI : SectionSpecficUI, IDelayedStartObserver
 {
-    public Section section;
+    private WorldMapConnector section;
     [SerializeField] private Slider engineIconProgressionSlider;
     [SerializeField] private Image iconDummy;
     [SerializeField] private Sprite slopeUpSprite, slopeDownSprite;
@@ -29,9 +29,9 @@ public class SectionUI : SectionSpecficUI, IDelayedStartObserver
     }
     public void DelayedStart()
     {
-        OnCurrentSectionChanged(section);
+        OnCurrentSectionChanged(null);
     }
-    private void OnCurrentSectionChanged(Section section)
+    private void OnCurrentSectionChanged(WorldMapConnector section)
     {
         if (!section)
             return;
@@ -40,7 +40,7 @@ public class SectionUI : SectionSpecficUI, IDelayedStartObserver
         
         iconDummy.transform.parent.DestroyAllChildren(iconDummy.transform);
 
-        foreach (Tuple<Sprite, float> icon in section.GetIcons())
+        foreach (Tuple<Sprite, float> icon in section.Section.GetIcons())
         {
             CreateIcon(icon.Item2, icon.Item1);
         }

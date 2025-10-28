@@ -38,13 +38,13 @@ public class WorldMapConnector : MonoBehaviour, ISelectableWorldMapElement
         
         Distance = Vector3.Distance(a, b);
 
-        var copped = Crop(a, b);
+        var cropped = Crop(a, b);
         
         transform.position = Vector2.Lerp(a, b, 0.5f);
         transform.right = (a - b).normalized;
         
-        lineRenderer.SetPosition(0, copped.Item1);
-        lineRenderer.SetPosition(1, copped.Item2);
+        lineRenderer.SetPosition(0, cropped.Item1);
+        lineRenderer.SetPosition(1, cropped.Item2);
         
         distanceLabelText.text = $"{Mathf.Round(Distance * 10f)/10f} km";
         if (transform.rotation.eulerAngles.z > 90 || transform.rotation.eulerAngles.z < -90f)

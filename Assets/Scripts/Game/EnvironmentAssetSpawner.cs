@@ -124,7 +124,7 @@ public class EnvironmentAssetSpawner : MonoBehaviour, IEnvironmentAsset
 
             lastProbabilityEvaluation = currentProbabilityEvaluation;
             
-            float probability = DriveHandler.Instance.CurrentSection.GetProbability(probabilityCurve, DriveHandler.Instance.Progression);
+            float probability = DriveHandler.Instance.CurrentSection.Section.GetProbability(probabilityCurve, DriveHandler.Instance.Progression);
             if (Random.Range(0f, 1f) > probability)
                 return;
         }
