@@ -84,6 +84,7 @@ public class WorldMapConnector : MonoBehaviour, ISelectableWorldMapElement
                 float l = icon.Item2;
                 float r = Distance / 2f - .6f;
                 instance.transform.localPosition = new Vector3(Mathf.Lerp(-r, r, l),0,0);
+                instance.transform.rotation = Quaternion.Euler(0,0,-transform.rotation.z);
                 instance.gameObject.SetActive(true);
             }
         }
