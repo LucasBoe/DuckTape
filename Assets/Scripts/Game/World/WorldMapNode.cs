@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SS;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class WorldMapNode : MonoBehaviour, ISelectableWorldMapElement
@@ -16,7 +17,11 @@ public class WorldMapNode : MonoBehaviour, ISelectableWorldMapElement
 
     private bool isVisible;
     private bool isSelected;
-    
+    public GUID ID;
+    private void Awake()
+    {
+        ID = GUID.Generate();
+    }
     public void Apply(StationConfig config)
     {
         name = config.commaSeparatedListOfNames.Split(',').PickRandom();

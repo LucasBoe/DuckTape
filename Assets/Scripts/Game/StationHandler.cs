@@ -8,9 +8,10 @@ public class StationHandler : Singleton<StationHandler>
     public WorldMapNode NextStation { get; private set; }
     public Event<WorldMapNode> TargetStationChangedEvent = new();
     public Event<WorldMapNode> EnterStationEvent = new();
-    public void SetStation(WorldMapNode station)
+    public void SetStartStation(WorldMapNode station)
     {
         CurrentStation = station;
+        EnterStationEvent?.Invoke(CurrentStation);
     }
     public void ModifyTargetStation(WorldMapNode target)
     {

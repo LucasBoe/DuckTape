@@ -4,6 +4,7 @@ using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public abstract class SectionSpecficUI : GamePhaseUI
@@ -24,12 +25,14 @@ public abstract class SectionSpecficUI : GamePhaseUI
         transform.DOScaleY(0f, .3f).SetEase(Ease.InSine);
     }
 }
-public class CargoSellUI : SectionSpecficUI
+public class CargoSellUI : SectionSpecficUI, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private CargoConfigContainer cargos;
     [SerializeField] private GameObject dummyObject;
     
     List<SellUIElement> elements = new();
+    private WorldMapNode station;
+    private bool isHovered;
     private void Awake()
     {
         dummyObject.SetActive(false);
@@ -46,10 +49,12 @@ public class CargoSellUI : SectionSpecficUI
         base.OnDisable();
         StationHandler.Instance.EnterStationEvent.RemoveListener(OnEnterStation);
     }
-    private void OnEnterStation(WorldMapNode obj)
+    private void OnEnterStation(WorldMapNode station)
     {
         foreach (var element in elements)
-            element.Instance.SetActive(obj.Config.Takes.Contains(element.Cargo));
+            element.Instance.SetActive(station.Config.Takes.Contains(element.Cargo));
+        
+        this.station = station;
     }
     private void Start()
     {
@@ -72,12 +77,51 @@ public class CargoSellUI : SectionSpecficUI
             });
         }
     }
-    
     public class SellUIElement
     {
         public CargoConfigBase Cargo;
         public GameObject Instance;
         public Image Image;
         public TMP_Text Text;
+    }
+    private void Update()
+    {
+        if (!isHovered)
+            return;
+        
+        if (!SpatialInventoryHandler.Instance.IsDragging)
+            return;
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            bool canSell = CanSellAtCurrentStation(SpatialInventoryHandler.Instance.CurrentItem);
+            if (canSell)
+                SpatialInventoryHandler.Instance.SellCurrentTo(station);
+        }
+    }
+    private bool CanSellAtCurrentStation(SpatialInventoryItem cargo)
+    {
+        if (!StationHandler.Instance.CurrentStation.Config.Takes.Contains(cargo.Cargo))
+            return false;
+
+        if (cargo.OriginStationID == StationHandler.Instance.CurrentStation.ID)
+            return false;
+        
+        return true;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        isHovered = true;
+        
+        bool isDragging = SpatialInventoryHandler.Instance.IsDragging;
+        if (!isDragging)
+            return;
+
+        GetComponent<Image>().color = CanSellAtCurrentStation(SpatialInventoryHandler.Instance.CurrentItem) ? Color.green : Color.red;
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isHovered = false;
+        GetComponent<Image>().color = Color.gray;
     }
 }

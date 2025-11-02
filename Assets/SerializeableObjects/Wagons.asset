@@ -15,7 +15,7 @@ MonoBehaviour:
   Container: {fileID: 11400000}
   assetGUID: -14148
   prefab: {fileID: 8470376246543035952, guid: c670428bd4888b3498042ad6af7ac2fb, type: 3}
-  length: 2.31
+  length: 2.5625
   EmptyWeight: 300
   ShopPrice: 10
 --- !u!114 &-4167193673302700741
@@ -56,9 +56,9 @@ MonoBehaviour:
   ShopPrice: 10
   MaxSpeed: 24
   MaxCoalStorage: 10
-  CoalBurnRate: 0.04
+  CoalBurnRate: 0.01
   MaxAccelleration: 10
-  BreakPower: 2
+  BreakPower: 0.5
   MaxSandStorage: 10
   SandConsumption: 1
 --- !u!114 &11400000

@@ -9,6 +9,7 @@ public class CargoConfigBase : ContaineableScriptableObject
     [SerializeField] private Sprite sprite;
     [SerializeField] private int value;
     [SerializeField] private float weight;
+    [SerializeField] public Vector2Int Size;
 
     public CargoType Type => type;
     public Sprite Sprite => sprite;

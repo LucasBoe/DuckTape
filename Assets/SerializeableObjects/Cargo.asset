@@ -18,6 +18,7 @@ MonoBehaviour:
   sprite: {fileID: 1410689979471864984, guid: 760d0b9c98bc68841af0447066c3989a, type: 3}
   value: 5
   weight: 2
+  Size: {x: 1, y: 1}
 --- !u!114 &-4518569640895199776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33,9 +34,10 @@ MonoBehaviour:
   Container: {fileID: 11400000}
   assetGUID: -5276
   type: 0
-  sprite: {fileID: -2067898546876541913, guid: e07cb9cd1b1a56f40843881fbabfce0e, type: 3}
+  sprite: {fileID: 21300000, guid: e07cb9cd1b1a56f40843881fbabfce0e, type: 3}
   value: 5
   weight: 10
+  Size: {x: 3, y: 1}
 --- !u!114 &-3816036722357313065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +56,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 55e3aba775c851b4b87b00553e17ac08, type: 3}
   value: 5
   weight: 5
+  Size: {x: 1, y: 1}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +76,6 @@ MonoBehaviour:
   - {fileID: -6638053724094599404}
   - {fileID: -4518569640895199776}
   - {fileID: 3475512841918060912}
-  - {fileID: 5790063112076774038}
 --- !u!114 &3475512841918060912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,29 +86,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fee625d8e21d8884490e824e15c510b9, type: 3}
-  m_Name: Fruit
+  m_Name: Banana
   m_EditorClassIdentifier: 
   Container: {fileID: 11400000}
   assetGUID: -5404
   type: 0
-  sprite: {fileID: 3483859434839241108, guid: e7d2ac47b306497489206fffb7bc06dd, type: 3}
+  sprite: {fileID: -9182177788924653191, guid: 7ec613b448e7d4251b28689a4e9b159f, type: 3}
   value: 8
   weight: 8
---- !u!114 &5790063112076774038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fee625d8e21d8884490e824e15c510b9, type: 3}
-  m_Name: Ore
-  m_EditorClassIdentifier: 
-  Container: {fileID: 11400000}
-  assetGUID: -5592
-  type: 0
-  sprite: {fileID: -3095991630914465091, guid: de5b696c66208be4eba71418390986bb, type: 3}
-  value: 5
-  weight: 20
+  Size: {x: 1, y: 2}

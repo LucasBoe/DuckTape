@@ -16,6 +16,6 @@ public class SessionHandler : MonoBehaviour, IDelayedStartObserver
         MoneyHandler.Instance.ChangeMoney(startupMoney);
 
         var startStation = WorldMapHandler.Instance.PickStartStation();
-        StationHandler.Instance.SetStation(startStation);
+        StationHandler.Instance.SetStartStation(startStation);
     }
 }
