@@ -86,10 +86,10 @@ MonoBehaviour:
     Thistlewick, Tidewater, Timberfall, Tranquil Bay, Tumblebrook, Velvet Harbor,
     Westering, Westmere, Whitebridge, Willowfen, Windemere
   Takes:
-  - {fileID: 3475512841918060912, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   - {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   - {fileID: -4518569640895199776, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: 3475512841918060912, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   Sells:
   - {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
@@ -163,5 +163,5 @@ MonoBehaviour:
   - {fileID: -3816036722357313065, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   - {fileID: -6638053724094599404, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   Sells:
-  - {fileID: 5790063112076774038, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
+  - {fileID: 3475512841918060912, guid: 661d9838ecd043341aea408e0cec5fae, type: 2}
   hasPassengers: 0
