@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,6 +11,9 @@ public class SpatialInventoryArea : MonoBehaviour
     [SerializeField] private Vector2Int size;
     private SpatialInventorySlot[,] slots;
     private List<SpatialInventorySlot> slotList = new();
+    [SerializeField, ReadOnly] private bool isHovered = false;
+
+    private Collider2D collider;
     
     public const float SLOT_SIZE = 5/16f;
     public const float SLOT_GAP = 1/16f;
@@ -31,15 +35,43 @@ public class SpatialInventoryArea : MonoBehaviour
             }
         }
     }
+    private void OnEnable()
+    {
+        if (!collider)
+        {
+            collider = GetComponent<Collider2D>();
+            collider.enabled = false;
+        }
+        
+        SpatialInventoryHandler.Instance.PickUpEvent.AddListener(OnPickUp);
+        SpatialInventoryHandler.Instance.DropEvent.AddListener(OnDrop);
+    }
+    private void OnDisable()
+    {
+        SpatialInventoryHandler.Instance.PickUpEvent.RemoveListener(OnPickUp);
+        SpatialInventoryHandler.Instance.DropEvent.RemoveListener(OnDrop);
+    }
+    private void OnPickUp(SpatialInventoryItem obj)
+    {
+        if (collider)
+            collider.enabled = true;
+    }
+    private void OnDrop(SpatialInventoryItem obj)
+    {
+        if (collider)
+            collider.enabled = false;
+    }
     private void OnMouseEnter()
     {
         //hover enter
         SpatialInventoryHandler.Instance.NotifyEnter(this);
+        isHovered = true;
     }
     private void OnMouseExit()
     {
         //hover exit
         SpatialInventoryHandler.Instance.NotifyExit(this);
+        isHovered = false;
     }
     public bool TryGetAvailableSlotPlacements(Vector3 worldPosition, SpatialInventoryItem itemInHand,
         out SpatialPlacementInfo[] placement)

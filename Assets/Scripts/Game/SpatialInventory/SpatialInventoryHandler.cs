@@ -12,6 +12,7 @@ public class SpatialInventoryHandler : SingletonBehaviour<SpatialInventoryHandle
     private SpatialPlacementInfo currentPlacement;
     [ShowNativeProperty] public bool IsDragging => itemInHand;
     public SpatialInventoryItem CurrentItem => IsDragging ? itemInHand : null;
+    public Event<SpatialInventoryItem> PickUpEvent = new(), DropEvent = new();
 
     private void Update()
     {
@@ -34,6 +35,7 @@ public class SpatialInventoryHandler : SingletonBehaviour<SpatialInventoryHandle
         {
             currentlyHoveredArea.AddItem(itemInHand, currentPlacement);
             itemInHand.SetPickedUp(false);
+            DropEvent?.Invoke(itemInHand);
             itemInHand = null;
         }
     }
@@ -73,10 +75,12 @@ public class SpatialInventoryHandler : SingletonBehaviour<SpatialInventoryHandle
 
         item.SetPickedUp(true);
         itemInHand = item;
+        PickUpEvent?.Invoke(itemInHand);
     }
     public void SellCurrentTo(WorldMapNode station)
     {
         MoneyHandler.Instance.ChangeMoney(itemInHand.Cargo.Value, itemInHand.transform.position);
+        DropEvent?.Invoke(itemInHand);
         Destroy(itemInHand.gameObject);
         itemInHand = null;
     }
